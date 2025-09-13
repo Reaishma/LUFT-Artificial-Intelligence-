@@ -1,0 +1,3224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML Ocean City</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Raleway:wght@300;400;600;700&family=Fira+Code:wght@300;400;500&family=Playfair+Display:wght@300;400;500;700&family=Revalia:wght@400&family=Fredoka+One:wght@400&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #007bff;
+            --secondary-color: #6c757d;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --warning-color: #ffc107;
+            --info-color: #17a2b8;
+            --light-color: #f8f9fa;
+            --dark-color: #343a40;
+        }
+
+        /* Global Styles */
+        body {
+            font-family: 'Fira Code', 'Courier New', monospace;
+            line-height: 1.6;
+            color: #333;
+            font-size: 14px;
+        }
+
+        /* Headings with Roboto */
+        h1, h2, h3, h4, h5, h6, .navbar-brand {
+            font-family: 'Roboto', sans-serif;
+            font-weight: 500;
+        }
+
+        /* Hero Section with Raleway */
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-color), #6610f2);
+            color: white;
+            padding: 80px 0;
+            font-family: 'Raleway', sans-serif;
+        }
+
+        .hero-section h1 {
+            font-family: 'Raleway', sans-serif;
+            font-weight: 700;
+        }
+
+        .hero-section p {
+            font-family: 'Raleway', sans-serif;
+            font-weight: 400;
+        }
+
+        /* Model Type Cards */
+        .model-type-card {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            height: 100%;
+        }
+
+        .model-type-card:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+        }
+
+        .model-type-card.selected {
+            border-color: var(--primary-color);
+            background-color: #e7f3ff;
+            transform: translateY(-2px);
+        }
+
+        /* Upload Area */
+        .upload-area {
+            border: 3px dashed #dee2e6;
+            border-radius: 12px;
+            padding: 60px 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            background-color: #fafafa;
+        }
+
+        .upload-area:hover {
+            border-color: var(--primary-color);
+            background-color: #f0f8ff;
+            transform: scale(1.02);
+        }
+
+        .upload-area.dragover {
+            border-color: var(--success-color);
+            background-color: #e8f5e8;
+            border-style: solid;
+        }
+
+        /* Metric Cards */
+        .metric-card {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            margin-bottom: 20px;
+            border: 1px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        /* Card Hover Effects */
+        .card-hover {
+            transition: all 0.3s ease;
+            border: 1px solid #dee2e6;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+            border-color: var(--primary-color);
+        }
+
+        /* Navigation */
+        .navbar-brand {
+            font-family: 'Revalia', cursive;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        /* Magic Hat Logo Style */
+        .magic-hat {
+            font-size: 1.5rem;
+            margin-right: 8px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .navbar-nav {
+            background-color: #000000;
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .navbar-nav .nav-link {
+            font-family: 'Raleway', sans-serif;
+            font-weight: 600;
+            font-size: 1.2rem;
+            padding: 0.5rem 1rem;
+            margin: 0 0.2rem;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            color: #ffffff !important;
+        }
+
+        .navbar-nav .nav-link:hover {
+            background-color: rgba(255,255,255,0.1);
+            color: #ffffff !important;
+        }
+
+        .navbar-nav .nav-link.active {
+            background-color: rgba(255,255,255,0.2);
+            color: #ffffff !important;
+        }
+
+        /* Buttons */
+        .btn {
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        /* Page Sections */
+        .page-section {
+            display: none;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        /* Log Output */
+        #log-output {
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .log-line {
+            margin-bottom: 4px;
+            word-wrap: break-word;
+        }
+
+        /* Loading Spinner */
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(0,0,0,0.1);
+            border-top: 3px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 40px 0;
+            font-family: 'Fira Code', monospace;
+        }
+
+        /* Sample Data Table */
+        .sample-data-table {
+            font-size: 12px;
+            font-family: 'Fira Code', monospace;
+        }
+
+        /* Training Progress Animation */
+        .training-progress {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* Deployment Results */
+        .deployment-result {
+            background: #f8f9fa;
+            border-left: 4px solid var(--success-color);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+        }
+
+        .deployment-url {
+            font-family: 'Fira Code', monospace;
+            background: #e9ecef;
+            padding: 8px;
+            border-radius: 4px;
+            word-break: break-all;
+        }
+
+        /* Documentation Links */
+        .doc-link {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Raleway', sans-serif !important;
+            font-size: 1.2rem !important;
+            font-weight: 600 !important;
+            padding: 15px 20px !important;
+            border-radius: 8px !important;
+            margin: 4px 0 !important;
+        }
+
+        .doc-link:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(0,123,255,0.3);
+        }
+
+        .doc-link.active {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 700 !important;
+        }
+
+        .doc-content {
+            display: none !important;
+        }
+
+        .doc-content.active {
+            display: block !important;
+        }
+
+        /* Vogue Style Hero Section */
+        .vogue-hero {
+            background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #000000 100%);
+            color: white;
+            padding: 80px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .vogue-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="0.5" fill="%23ffffff" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .vogue-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .vogue-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .vogue-subtitle {
+            font-family: 'Raleway', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 300;
+            letter-spacing: 1px;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .countdown-container {
+            margin: 40px 0;
+        }
+
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .countdown-item {
+            text-align: center;
+        }
+
+        .countdown-number {
+            font-family: 'Fira Code', monospace;
+            font-size: 4rem;
+            font-weight: 700;
+            line-height: 1;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .countdown-label {
+            font-family: 'Raleway', sans-serif;
+            font-size: 1rem;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 10px;
+            opacity: 0.8;
+        }
+
+        .vogue-btn {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+            padding: 15px 40px;
+            font-family: 'Raleway', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            margin: 30px 0;
+        }
+
+        .vogue-btn:hover {
+            background: white;
+            color: black;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255,255,255,0.2);
+        }
+
+        .vogue-description {
+            font-family: 'Raleway', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 300;
+            margin-top: 20px;
+            opacity: 0.9;
+        }
+
+        /* Vogue Style Sidebar */
+        .vogue-sidebar {
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 300px;
+            height: 100vh;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            z-index: 9999;
+            transition: right 0.3s ease;
+            overflow-y: auto;
+            border-left: 1px solid #e0e0e0;
+        }
+
+        .vogue-sidebar.open {
+            right: 0;
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            border-bottom: 1px solid #e0e0e0;
+            background: white;
+        }
+
+        .sidebar-close {
+            float: right;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #333;
+        }
+
+        .sidebar-logo {
+            font-family: 'Revalia', cursive;
+            font-size: 1.5rem;
+            color: #000;
+            margin-top: 10px;
+        }
+
+        /* Original ML Platform Logo */
+        .ml-logo {
+            display: inline-flex;
+            align-items: center;
+            margin-right: 10px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo-icon::before {
+            content: 'ML';
+            color: white;
+            font-family: 'Fira Code', monospace;
+            font-weight: 700;
+            font-size: 14px;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .logo-icon::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            50% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+            100% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+        }
+
+        .logo-text {
+            font-family: 'Revalia', cursive;
+            font-size: 1.8rem;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .sidebar-menu {
+            padding: 0;
+        }
+
+        .sidebar-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            border-bottom: 1px solid #f0f0f0;
+            font-family: 'Raleway', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            color: #333;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .sidebar-item:hover {
+            background-color: #f8f9fa;
+            color: #000;
+        }
+
+        .sidebar-item .icon {
+            font-size: 16px;
+            color: #666;
+        }
+
+        .sidebar-section {
+            margin-top: 30px;
+            padding: 0 20px 10px;
+            font-family: 'Raleway', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #999;
+        }
+
+        /* Hamburger Menu */
+        .hamburger-menu {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 10000;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger-menu:hover {
+            background: rgba(0, 0, 0, 1);
+        }
+
+        /* Overlay */
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 9998;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                font-size: 13px;
+            }
+            
+            .vogue-title {
+                font-size: 2.5rem;
+            }
+            
+            .countdown {
+                gap: 15px;
+            }
+            
+            .countdown-number {
+                font-size: 2.5rem;
+            }
+            
+            .metric-value {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hamburger Menu Button -->
+    <button class="hamburger-menu" onclick="toggleSidebar()">
+        ☰
+    </button>
+
+    <!-- Vogue Style Sidebar -->
+    <div class="vogue-sidebar" id="voguesSidebar">
+        <div class="sidebar-header">
+            <button class="sidebar-close" onclick="closeSidebar()">&times;</button>
+            <div class="sidebar-logo">
+                <div class="ml-logo">
+                    <div class="logo-icon"></div>
+                </div>
+                ML Ocean City
+            </div>
+        </div>
+        
+        <div class="sidebar-menu">
+            <div class="sidebar-item" onclick="showPage('home')">
+                <span>Home</span>
+            </div>
+            <div class="sidebar-item" onclick="showPage('model-builder')">
+                <span>Model Builder</span>
+            </div>
+            <div class="sidebar-item" onclick="showPage('gallery')">
+                <span>Gallery</span>
+            </div>
+            <div class="sidebar-item" onclick="showPage('uploader')">
+                <span>Data Upload</span>
+            </div>
+            <div class="sidebar-item" onclick="showPage('trainer')">
+                <span>Trainer</span>
+            </div>
+            <div class="sidebar-item" onclick="showPage('evaluator')">
+                <span>Evaluator</span>
+            </div>
+            <div class="sidebar-item" onclick="showPage('deployer')">
+                <span>Deployer</span>
+            </div>
+            <div class="sidebar-item" onclick="showPage('docs')">
+                <span>Docs</span>
+            </div>
+            <div class="sidebar-item" onclick="showPage('support')">
+                <span>Support</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+
+    <!-- Home Page -->
+    <section id="home" class="page-section active">
+        <div class="vogue-hero">
+            <div class="container text-center vogue-content">
+                <div class="ml-logo" style="justify-content: center; margin-bottom: 20px;">
+                    <div class="logo-icon" style="width: 60px; height: 60px; margin-right: 0;">
+                    </div>
+                </div>
+                <h1 class="vogue-title">ML Ocean City<br>Platform</h1>
+                
+                <button class="btn vogue-btn" onclick="showPage('model-builder')">JOIN THE PLATFORM</button>
+                
+                <p class="vogue-description">AI models. 1 revolutionary platform</p>
+            </div>
+        </div>
+
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 card-hover">
+                        <div class="card-body text-center">
+                            <h3 class="card-title">Easy Data Upload</h3>
+                            <p class="card-text">Upload your datasets in CSV, Excel, or JSON format with automated preprocessing capabilities.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 card-hover">
+                        <div class="card-body text-center">
+                            <h3 class="card-title">Multiple ML Algorithms</h3>
+                            <p class="card-text">Choose from various algorithms including regression, classification, clustering, and deep learning models.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 card-hover">
+                        <div class="card-body text-center">
+                            <h3 class="card-title">One-Click Deployment</h3>
+                            <p class="card-text">Deploy your trained models as REST APIs with AWS cloud integration for scalability.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Model Builder Page -->
+    <section id="model-builder" class="page-section">
+        <div class="container mt-4">
+            <h1 class="mb-4">Model Builder</h1>
+            <p class="lead">Build machine learning models step by step with our guided interface</p>
+            
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h3>Step 1: Select Model Type</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row" id="model-types">
+                                <div class="col-md-4 mb-3">
+                                    <div class="card model-type-card" data-type="regression">
+                                        <div class="card-body text-center">
+                                            <h5>Regression</h5>
+                                            <p>Linear, Decision Tree, Random Forest, SVM</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="card model-type-card" data-type="classification">
+                                        <div class="card-body text-center">
+                                            <h5>Classification</h5>
+                                            <p>Logistic, SVM, Neural Networks</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="card model-type-card" data-type="clustering">
+                                        <div class="card-body text-center">
+                                            <h5>Clustering</h5>
+                                            <p>K-Means, Hierarchical</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="card model-type-card" data-type="dimensionality_reduction">
+                                        <div class="card-body text-center">
+                                            <h5>Dimensionality Reduction</h5>
+                                            <p>PCA, t-SNE</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="card model-type-card" data-type="neural_networks">
+                                        <div class="card-body text-center">
+                                            <h5>Neural Networks</h5>
+                                            <p>MLP, Deep Learning</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="card model-type-card" data-type="deep_learning">
+                                        <div class="card-body text-center">
+                                            <h5>Deep Learning</h5>
+                                            <p>CNN, RNN, LSTM</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card mb-4" id="step2" style="display: none;">
+                        <div class="card-header">
+                            <h3>Step 2: Configure Model Parameters</h3>
+                        </div>
+                        <div class="card-body" id="model-config">
+                            <!-- Dynamic content -->
+                        </div>
+                    </div>
+
+                    <div class="card mb-4" id="step3" style="display: none;">
+                        <div class="card-header">
+                            <h3>Step 3: Select Dataset</h3>
+                        </div>
+                        <div class="card-body">
+                            <select class="form-select mb-3" id="dataset-select">
+                                <option value="">Choose your dataset...</option>
+                                <option value="sales">Sales Data</option>
+                                <option value="customer">Customer Data</option>
+                                <option value="fraud">Fraud Detection Data</option>
+                            </select>
+                            <select class="form-select mb-3" id="target-column">
+                                <option value="">Choose target column...</option>
+                                <option value="sales_amount">Sales Amount</option>
+                                <option value="customer_segment">Customer Segment</option>
+                                <option value="is_fraud">Is Fraud</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="card mb-4" id="step4" style="display: none;">
+                        <div class="card-header">
+                            <h3>Step 4: Create Model</h3>
+                        </div>
+                        <div class="card-body">
+                            <input type="text" class="form-control mb-3" id="model-name" placeholder="Enter model name">
+                            <button class="btn btn-primary btn-lg" id="create-model">Create Model</button>
+                            <div id="model-creation-status" class="mt-3"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Available Models</h4>
+                        </div>
+                        <div class="card-body">
+                            <div id="available-models">
+                                <div class="card mb-2 card-hover">
+                                    <div class="card-body">
+                                        <h6 class="card-title">Sales Prediction</h6>
+                                        <p class="card-text small text-muted">Linear Regression</p>
+                                        <span class="badge bg-success">Completed</span>
+                                    </div>
+                                </div>
+                                <div class="card mb-2 card-hover">
+                                    <div class="card-body">
+                                        <h6 class="card-title">Customer Segmentation</h6>
+                                        <p class="card-text small text-muted">K-Means Clustering</p>
+                                        <span class="badge bg-success">Completed</span>
+                                    </div>
+                                </div>
+                                <div class="card mb-2 card-hover">
+                                    <div class="card-body">
+                                        <h6 class="card-title">Fraud Detection</h6>
+                                        <p class="card-text small text-muted">Random Forest</p>
+                                        <span class="badge bg-success">Completed</span>
+                                    </div>
+                                </div>
+                                <div class="card mb-2 card-hover">
+                                    <div class="card-body">
+                                        <h6 class="card-title">Email Classification</h6>
+                                        <p class="card-text small text-muted">Logistic Regression</p>
+                                        <span class="badge bg-success">Completed</span>
+                                    </div>
+                                </div>
+                                <div class="card mb-2 card-hover">
+                                    <div class="card-body">
+                                        <h6 class="card-title">Image Recognition</h6>
+                                        <p class="card-text small text-muted">Support Vector Machine</p>
+                                        <span class="badge bg-success">Completed</span>
+                                    </div>
+                                </div>
+                                <div class="card mb-2 card-hover">
+                                    <div class="card-body">
+                                        <h6 class="card-title">Product Clustering</h6>
+                                        <p class="card-text small text-muted">Hierarchical Clustering</p>
+                                        <span class="badge bg-success">Completed</span>
+                                    </div>
+                                </div>
+                                <div class="card mb-2 card-hover">
+                                    <div class="card-body">
+                                        <h6 class="card-title">Data Visualization</h6>
+                                        <p class="card-text small text-muted">Principal Component Analysis</p>
+                                        <span class="badge bg-success">Completed</span>
+                                    </div>
+                                </div>
+                                <div class="card mb-2 card-hover">
+                                    <div class="card-body">
+                                        <h6 class="card-title">Price Prediction</h6>
+                                        <p class="card-text small text-muted">Neural Network</p>
+                                        <span class="badge bg-success">Completed</span>
+                                    </div>
+                                </div>
+                                <div class="card mb-2 card-hover">
+                                    <div class="card-body">
+                                        <h6 class="card-title">Image Classification</h6>
+                                        <p class="card-text small text-muted">Convolutional Neural Network</p>
+                                        <span class="badge bg-success">Completed</span>
+                                    </div>
+                                </div>
+                                <div class="card mb-2 card-hover">
+                                    <div class="card-body">
+                                        <h6 class="card-title">Text Analysis</h6>
+                                        <p class="card-text small text-muted">Recurrent Neural Network</p>
+                                        <span class="badge bg-success">Completed</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Model Gallery Page -->
+    <section id="gallery" class="page-section">
+        <div class="container mt-4">
+            <h1 class="mb-4">Model Gallery</h1>
+            <p class="lead">Explore trained models and their performance metrics</p>
+            
+            <div class="row mb-4">
+                <div class="col-md-4">
+                    <select class="form-select" id="filter-type" onchange="filterModels()">
+                        <option value="">All Types</option>
+                        <option value="regression">Regression</option>
+                        <option value="classification">Classification</option>
+                        <option value="clustering">Clustering</option>
+                        <option value="dimensionality_reduction">Dimensionality Reduction</option>
+                        <option value="neural_networks">Neural Networks</option>
+                        <option value="deep_learning">Deep Learning</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <select class="form-select" id="filter-status" onchange="filterModels()">
+                        <option value="">All Status</option>
+                        <option value="training">Training</option>
+                        <option value="completed">Completed</option>
+                        <option value="failed">Failed</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <input type="search" class="form-control" id="search-models" placeholder="Search models..." onkeyup="searchModels()">
+                </div>
+            </div>
+            
+            <div class="row" id="models-grid">
+                <div class="col-md-4 mb-4 model-card" data-type="regression" data-status="completed">
+                    <div class="card card-hover">
+                        <div class="card-body">
+                            <h5 class="card-title">Sales Prediction Model</h5>
+                            <p class="card-text">Linear regression model for sales forecasting</p>
+                            <div class="metric-card">
+                                <div class="metric-value">94.2%</div>
+                                <div>R² Score</div>
+                            </div>
+                            <span class="badge bg-success">Completed</span>
+                            <div class="mt-3">
+                                <button class="btn btn-sm btn-primary me-2" onclick="viewModelDetails('sales-prediction')">View Details</button>
+                                <button class="btn btn-sm btn-outline-success" onclick="deployModel('sales-prediction')">Deploy</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-4 model-card" data-type="clustering" data-status="completed">
+                    <div class="card card-hover">
+                        <div class="card-body">
+                            <h5 class="card-title">Customer Segmentation</h5>
+                            <p class="card-text">K-means clustering for customer analysis</p>
+                            <div class="metric-card">
+                                <div class="metric-value">0.73</div>
+                                <div>Silhouette Score</div>
+                            </div>
+                            <span class="badge bg-success">Completed</span>
+                            <div class="mt-3">
+                                <button class="btn btn-sm btn-primary me-2" onclick="viewModelDetails('customer-segmentation')">View Details</button>
+                                <button class="btn btn-sm btn-outline-success" onclick="deployModel('customer-segmentation')">Deploy</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-4 model-card" data-type="classification" data-status="completed">
+                    <div class="card card-hover">
+                        <div class="card-body">
+                            <h5 class="card-title">Fraud Detection</h5>
+                            <p class="card-text">Random Forest classifier for fraud detection</p>
+                            <div class="metric-card">
+                                <div class="metric-value">96.8%</div>
+                                <div>Accuracy</div>
+                            </div>
+                            <span class="badge bg-success">Completed</span>
+                            <div class="mt-3">
+                                <button class="btn btn-sm btn-primary me-2" onclick="viewModelDetails('fraud-detection')">View Details</button>
+                                <button class="btn btn-sm btn-outline-success" onclick="deployModel('fraud-detection')">Deploy</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-4 model-card" data-type="classification" data-status="completed">
+                    <div class="card card-hover">
+                        <div class="card-body">
+                            <h5 class="card-title">Email Classification</h5>
+                            <p class="card-text">Logistic regression for spam detection</p>
+                            <div class="metric-card">
+                                <div class="metric-value">92.4%</div>
+                                <div>Accuracy</div>
+                            </div>
+                            <span class="badge bg-success">Completed</span>
+                            <div class="mt-3">
+                                <button class="btn btn-sm btn-primary me-2" onclick="viewModelDetails('email-classification')">View Details</button>
+                                <button class="btn btn-sm btn-outline-success" onclick="deployModel('email-classification')">Deploy</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-4 model-card" data-type="classification" data-status="completed">
+                    <div class="card card-hover">
+                        <div class="card-body">
+                            <h5 class="card-title">Image Recognition</h5>
+                            <p class="card-text">SVM for image classification</p>
+                            <div class="metric-card">
+                                <div class="metric-value">89.7%</div>
+                                <div>Accuracy</div>
+                            </div>
+                            <span class="badge bg-success">Completed</span>
+                            <div class="mt-3">
+                                <button class="btn btn-sm btn-primary me-2" onclick="viewModelDetails('image-recognition')">View Details</button>
+                                <button class="btn btn-sm btn-outline-success" onclick="deployModel('image-recognition')">Deploy</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-4 model-card" data-type="clustering" data-status="completed">
+                    <div class="card card-hover">
+                        <div class="card-body">
+                            <h5 class="card-title">Product Clustering</h5>
+                            <p class="card-text">Hierarchical clustering analysis</p>
+                            <div class="metric-card">
+                                <div class="metric-value">0.68</div>
+                                <div>Silhouette Score</div>
+                            </div>
+                            <span class="badge bg-success">Completed</span>
+                            <div class="mt-3">
+                                <button class="btn btn-sm btn-primary me-2" onclick="viewModelDetails('product-clustering')">View Details</button>
+                                <button class="btn btn-sm btn-outline-success" onclick="deployModel('product-clustering')">Deploy</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-4 model-card" data-type="dimensionality_reduction" data-status="completed">
+                    <div class="card card-hover">
+                        <div class="card-body">
+                            <h5 class="card-title">Data Visualization</h5>
+                            <p class="card-text">PCA for dimensionality reduction</p>
+                            <div class="metric-card">
+                                <div class="metric-value">85.2%</div>
+                                <div>Variance Explained</div>
+                            </div>
+                            <span class="badge bg-success">Completed</span>
+                            <div class="mt-3">
+                                <button class="btn btn-sm btn-primary me-2" onclick="viewModelDetails('data-visualization')">View Details</button>
+                                <button class="btn btn-sm btn-outline-success" onclick="deployModel('data-visualization')">Deploy</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-4 model-card" data-type="neural_networks" data-status="completed">
+                    <div class="card card-hover">
+                        <div class="card-body">
+                            <h5 class="card-title">Price Prediction</h5>
+                            <p class="card-text">Neural network for price forecasting</p>
+                            <div class="metric-card">
+                                <div class="metric-value">93.6%</div>
+                                <div>R² Score</div>
+                            </div>
+                            <span class="badge bg-success">Completed</span>
+                            <div class="mt-3">
+                                <button class="btn btn-sm btn-primary me-2" onclick="viewModelDetails('price-prediction')">View Details</button>
+                                <button class="btn btn-sm btn-outline-success" onclick="deployModel('price-prediction')">Deploy</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-4 model-card" data-type="deep_learning" data-status="completed">
+                    <div class="card card-hover">
+                        <div class="card-body">
+                            <h5 class="card-title">Image Classification</h5>
+                            <p class="card-text">CNN for advanced image recognition</p>
+                            <div class="metric-card">
+                                <div class="metric-value">97.3%</div>
+                                <div>Accuracy</div>
+                            </div>
+                            <span class="badge bg-success">Completed</span>
+                            <div class="mt-3">
+                                <button class="btn btn-sm btn-primary me-2" onclick="viewModelDetails('image-classification')">View Details</button>
+                                <button class="btn btn-sm btn-outline-success" onclick="deployModel('image-classification')">Deploy</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-4 model-card" data-type="deep_learning" data-status="completed">
+                    <div class="card card-hover">
+                        <div class="card-body">
+                            <h5 class="card-title">Text Analysis</h5>
+                            <p class="card-text">RNN for sentiment analysis</p>
+                            <div class="metric-card">
+                                <div class="metric-value">91.8%</div>
+                                <div>F1 Score</div>
+                            </div>
+                            <span class="badge bg-success">Completed</span>
+                            <div class="mt-3">
+                                <button class="btn btn-sm btn-primary me-2" onclick="viewModelDetails('text-analysis')">View Details</button>
+                                <button class="btn btn-sm btn-outline-success" onclick="deployModel('text-analysis')">Deploy</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Model Details Modal -->
+            <div class="modal fade" id="modelDetailsModal" tabindex="-1">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modelDetailsTitle">Model Details</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body" id="modelDetailsBody">
+                            <!-- Model details will be populated here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Data Uploader Page -->
+    <section id="uploader" class="page-section">
+        <div class="container mt-4">
+            <h1 class="mb-4">Data Uploader</h1>
+            <p class="lead">Upload your datasets for machine learning model training</p>
+            
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="upload-area" onclick="document.getElementById('fileInput').click();">
+                                <h3>Drop files here or click to upload</h3>
+                                <p class="text-muted">Supported formats: CSV, Excel (.xlsx), JSON</p>
+                                <input type="file" id="fileInput" multiple accept=".csv,.xlsx,.json" style="display: none;">
+                            </div>
+                            
+                            <div class="mt-4">
+                                <h5>Try Sample Data</h5>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <button class="btn btn-outline-primary w-100 mb-2" onclick="loadSampleData('sales')">
+                                            Sales Data Sample
+                                        </button>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <button class="btn btn-outline-primary w-100 mb-2" onclick="loadSampleData('customer')">
+                                            Customer Data Sample
+                                        </button>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <button class="btn btn-outline-primary w-100 mb-2" onclick="loadSampleData('fraud')">
+                                            Fraud Data Sample
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-4" id="file-preview" style="display: none;">
+                                <h5>Dataset Preview</h5>
+                                <div id="file-list"></div>
+                                <div id="data-preview"></div>
+                            </div>
+
+                            <div class="mt-4" id="upload-progress" style="display: none;">
+                                <h6>Upload Progress</h6>
+                                <div class="progress">
+                                    <div class="progress-bar" role="progressbar" style="width: 0%">0%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5>Upload Guidelines</h5>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-unstyled">
+                                <li class="mb-2">CSV files with headers</li>
+                                <li class="mb-2">Excel files (.xlsx format)</li>
+                                <li class="mb-2">JSON files with structured data</li>
+                                <li class="mb-2">Maximum file size: 100MB</li>
+                                <li class="mb-2">Clean data preferred</li>
+                                <li class="mb-2">Missing values handled automatically</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Model Trainer Page -->
+    <section id="trainer" class="page-section">
+        <div class="container mt-4">
+            <h1 class="mb-4">Model Trainer</h1>
+            <p class="lead">Monitor and manage your model training processes</p>
+            
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h5>Training Queue</h5>
+                        </div>
+                        <div class="card-body">
+                            <div id="training-queue">
+                                <div class="training-job mb-3 p-3 border rounded" data-model="sales-prediction">
+                                    <h6>Sales Prediction Model - Linear Regression</h6>
+                                    <div class="progress mb-2">
+                                        <div class="progress-bar bg-info" style="width: 0%">0%</div>
+                                    </div>
+                                    <small class="text-muted">Dataset: sales_data.csv | Status: Completed</small>
+                                </div>
+                                <div class="training-job mb-3 p-3 border rounded" data-model="customer-segmentation">
+                                    <h6>Customer Segmentation - K-Means</h6>
+                                    <div class="progress mb-2">
+                                        <div class="progress-bar bg-info" style="width: 0%">0%</div>
+                                    </div>
+                                    <small class="text-muted">Dataset: customer_data.csv | Status: Completed</small>
+                                </div>
+                                <div class="training-job mb-3 p-3 border rounded" data-model="fraud-detection">
+                                    <h6>Fraud Detection - Random Forest</h6>
+                                    <div class="progress mb-2">
+                                        <div class="progress-bar bg-info" style="width: 0%">0%</div>
+                                    </div>
+                                    <small class="text-muted">Dataset: fraud_data.csv | Status: Completed</small>
+                                </div>
+                                <div class="training-job mb-3 p-3 border rounded" data-model="email-classification">
+                                    <h6>Email Classification - Logistic Regression</h6>
+                                    <div class="progress mb-2">
+                                        <div class="progress-bar bg-info" style="width: 0%">0%</div>
+                                    </div>
+                                    <small class="text-muted">Dataset: email_data.csv | Status: Completed</small>
+                                </div>
+                                <div class="training-job mb-3 p-3 border rounded" data-model="image-recognition">
+                                    <h6>Image Recognition - Support Vector Machine</h6>
+                                    <div class="progress mb-2">
+                                        <div class="progress-bar bg-info" style="width: 0%">0%</div>
+                                    </div>
+                                    <small class="text-muted">Dataset: image_data.csv | Status: Completed</small>
+                                </div>
+                                <div class="training-job mb-3 p-3 border rounded" data-model="product-clustering">
+                                    <h6>Product Clustering - Hierarchical Clustering</h6>
+                                    <div class="progress mb-2">
+                                        <div class="progress-bar bg-info" style="width: 0%">0%</div>
+                                    </div>
+                                    <small class="text-muted">Dataset: product_data.csv | Status: Completed</small>
+                                </div>
+                                <div class="training-job mb-3 p-3 border rounded" data-model="data-visualization">
+                                    <h6>Data Visualization - Principal Component Analysis</h6>
+                                    <div class="progress mb-2">
+                                        <div class="progress-bar bg-info" style="width: 0%">0%</div>
+                                    </div>
+                                    <small class="text-muted">Dataset: high_dim_data.csv | Status: Completed</small>
+                                </div>
+                                <div class="training-job mb-3 p-3 border rounded" data-model="price-prediction">
+                                    <h6>Price Prediction - Neural Network</h6>
+                                    <div class="progress mb-2">
+                                        <div class="progress-bar bg-info" style="width: 0%">0%</div>
+                                    </div>
+                                    <small class="text-muted">Dataset: price_data.csv | Status: Completed</small>
+                                </div>
+                                <div class="training-job mb-3 p-3 border rounded" data-model="image-classification">
+                                    <h6>Image Classification - Convolutional Neural Network</h6>
+                                    <div class="progress mb-2">
+                                        <div class="progress-bar bg-info" style="width: 0%">0%</div>
+                                    </div>
+                                    <small class="text-muted">Dataset: image_dataset/ | Status: Completed</small>
+                                </div>
+                                <div class="training-job mb-3 p-3 border rounded" data-model="text-analysis">
+                                    <h6>Text Analysis - Recurrent Neural Network</h6>
+                                    <div class="progress mb-2">
+                                        <div class="progress-bar bg-info" style="width: 0%">0%</div>
+                                    </div>
+                                    <small class="text-muted">Dataset: text_corpus.csv | Status: Completed</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card mb-4" id="training-logs">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5>Training Logs</h5>
+                            <button class="btn btn-sm btn-outline-secondary" id="clear-logs" onclick="clearTrainingLogs()">Clear Logs</button>
+                        </div>
+                        <div class="card-body">
+                            <div class="bg-dark text-light p-3 rounded" id="log-output" style="height: 300px; overflow-y: auto;">
+                                <div class="log-line">[2025-09-13 01:00:00] Starting model training...</div>
+                                <div class="log-line">[2025-09-13 01:00:01] Loading dataset: sales_data.csv</div>
+                                <div class="log-line">[2025-09-13 01:00:02] Dataset shape: (1234, 8)</div>
+                                <div class="log-line">[2025-09-13 01:00:03] Preprocessing data...</div>
+                                <div class="log-line">[2025-09-13 01:00:05] Training model on 987 samples...</div>
+                                <div class="log-line text-warning">[2025-09-13 01:02:30] Training in progress... 65% complete</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            <h5>Training Statistics</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row text-center">
+                                <div class="col-6">
+                                    <div class="metric-card">
+                                        <div class="metric-value" id="total-models">10</div>
+                                        <div>Total Models</div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="metric-card">
+                                        <div class="metric-value" id="training-models">0</div>
+                                        <div>Training</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            <h5>Training Controls</h5>
+                        </div>
+                        <div class="card-body">
+                            <button class="btn btn-danger btn-sm mb-2 w-100" onclick="stopTraining()">
+                                Stop Current Training
+                            </button>
+                            <button class="btn btn-warning btn-sm mb-2 w-100" onclick="pauseTraining()">
+                                Pause Training
+                            </button>
+                            <button class="btn btn-info btn-sm mb-2 w-100" onclick="restartTraining()">
+                                Restart Training
+                            </button>
+                            <button class="btn btn-success btn-sm w-100" onclick="startAllTraining()">
+                                Train All Models
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Model Evaluator Page -->
+    <section id="evaluator" class="page-section">
+        <div class="container mt-4">
+            <h1 class="mb-4">Model Evaluator</h1>
+            <p class="lead">Comprehensive model performance evaluation and analysis</p>
+            
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <select class="form-select" id="model-select-eval" onchange="updateEvaluationResults()">
+                        <option value="">Select a model to evaluate</option>
+                        <option value="sales-prediction">Sales Prediction Model</option>
+                        <option value="customer-segmentation">Customer Segmentation</option>
+                        <option value="fraud-detection">Fraud Detection</option>
+                        <option value="email-classification">Email Classification</option>
+                        <option value="image-recognition">Image Recognition</option>
+                        <option value="product-clustering">Product Clustering</option>
+                        <option value="data-visualization">Data Visualization</option>
+                        <option value="price-prediction">Price Prediction</option>
+                        <option value="image-classification">Image Classification</option>
+                        <option value="text-analysis">Text Analysis</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <button class="btn btn-primary" onclick="evaluateModel()">Evaluate Model</button>
+                </div>
+                <div class="col-md-3">
+                    <button class="btn btn-outline-secondary" onclick="compareModels()">Compare Models</button>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="card mb-4" id="performance-metrics">
+                        <div class="card-header">
+                            <h5>Performance Metrics</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row" id="metrics-container">
+                                <div class="col-md-3">
+                                    <div class="metric-card">
+                                        <div class="metric-value" id="metric1">94.2%</div>
+                                        <div id="metric1-label">Accuracy</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="metric-card">
+                                        <div class="metric-value" id="metric2">0.89</div>
+                                        <div id="metric2-label">F1 Score</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="metric-card">
+                                        <div class="metric-value" id="metric3">0.91</div>
+                                        <div id="metric3-label">Precision</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="metric-card">
+                                        <div class="metric-value" id="metric4">0.87</div>
+                                        <div id="metric4-label">Recall</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h5>Model Comparison</h5>
+                        </div>
+                        <div class="card-body" id="comparison-results" style="display: none;">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Model</th>
+                                        <th>Type</th>
+                                        <th>Primary Metric</th>
+                                        <th>Score</th>
+                                        <th>Rank</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="comparison-table">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            <h5>Model Information</h5>
+                        </div>
+                        <div class="card-body" id="model-info">
+                            <p><strong>Model Name:</strong> <span id="info-name">Select a model</span></p>
+                            <p><strong>Algorithm:</strong> <span id="info-algorithm">-</span></p>
+                            <p><strong>Training Date:</strong> <span id="info-date">-</span></p>
+                            <p><strong>Dataset:</strong> <span id="info-dataset">-</span></p>
+                            <p><strong>Features:</strong> <span id="info-features">-</span></p>
+                            <span class="badge bg-success" id="info-status">Ready</span>
+                        </div>
+                    </div>
+
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            <h5>Quick Actions</h5>
+                        </div>
+                        <div class="card-body">
+                            <button class="btn btn-primary btn-sm w-100 mb-2" onclick="reEvaluateModel()">Re-evaluate</button>
+                            <button class="btn btn-success btn-sm w-100 mb-2" onclick="deploySelectedModel()">Deploy Model</button>
+                            <button class="btn btn-info btn-sm w-100 mb-2" onclick="generateReport()">Generate Report</button>
+                            <button class="btn btn-outline-secondary btn-sm w-100" onclick="exportResults()">📥 Export Results</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Model Deployer Page -->
+    <section id="deployer" class="page-section">
+        <div class="container mt-4">
+            <h1 class="mb-4">Model Deployer</h1>
+            <p class="lead">Deploy your trained models to production environments</p>
+            
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h5>Deployment Configuration</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Select Model</label>
+                                    <select class="form-select" id="model-select-deploy">
+                                        <option value="">Choose a trained model</option>
+                                        <option value="sales-prediction">Sales Prediction Model</option>
+                                        <option value="customer-segmentation">Customer Segmentation</option>
+                                        <option value="fraud-detection">Fraud Detection Model</option>
+                                        <option value="email-classification">Email Classification</option>
+                                        <option value="image-recognition">Image Recognition</option>
+                                        <option value="product-clustering">Product Clustering</option>
+                                        <option value="data-visualization">Data Visualization</option>
+                                        <option value="price-prediction">Price Prediction</option>
+                                        <option value="image-classification">Image Classification</option>
+                                        <option value="text-analysis">Text Analysis</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Environment</label>
+                                    <select class="form-select" id="environment-select">
+                                        <option value="staging">Staging</option>
+                                        <option value="production">Production</option>
+                                        <option value="development">Development</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Cloud Provider</label>
+                                    <select class="form-select" id="cloud-provider">
+                                        <option value="aws">Amazon Web Services</option>
+                                        <option value="gcp">Google Cloud Platform</option>
+                                        <option value="azure">Microsoft Azure</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">API Endpoint Name</label>
+                                    <input type="text" class="form-control" id="api-name" placeholder="my-ml-api">
+                                </div>
+                            </div>
+
+                            <div class="d-grid">
+                                <button class="btn btn-primary btn-lg" onclick="deployModel()">
+                                    Deploy Model
+                                </button>
+                            </div>
+
+                            <div id="deployment-results" class="mt-4" style="display: none;">
+                                <h5>✅ Deployment Successful!</h5>
+                                <div class="deployment-result">
+                                    <h6>🌐 API Endpoint Details:</h6>
+                                    <p><strong>Base URL:</strong></p>
+                                    <div class="deployment-url" id="api-base-url"></div>
+                                    
+                                    <p class="mt-3"><strong>Prediction Endpoint:</strong></p>
+                                    <div class="deployment-url" id="prediction-url"></div>
+                                    
+                                    <p class="mt-3"><strong>Health Check:</strong></p>
+                                    <div class="deployment-url" id="health-url"></div>
+                                    
+                                    <h6 class="mt-4">📝 Sample API Usage:</h6>
+                                    <div class="bg-dark text-light p-3 rounded">
+                                        <code id="api-example"></code>
+                                    </div>
+                                    
+                                    <h6 class="mt-4">Expected Response:</h6>
+                                    <div class="bg-light p-3 rounded">
+                                        <code id="response-example"></code>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            <h5>Deployment Statistics</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row text-center">
+                                <div class="col-6">
+                                    <div class="metric-card">
+                                        <div class="metric-value">12</div>
+                                        <div>Active Deployments</div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="metric-card">
+                                        <div class="metric-value">3</div>
+                                        <div>This Month</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            <h5>Cost Estimation</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Compute</span>
+                                <span>$8.76/month</span>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Storage</span>
+                                <span>$2.00/month</span>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Bandwidth</span>
+                                <span>$0.09/GB</span>
+                            </div>
+                            <hr>
+                            <div class="d-flex justify-content-between">
+                                <strong>Total</strong>
+                                <strong>$10.76/month</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Documentation Page -->
+    <section id="docs" class="page-section">
+        <div class="container mt-4">
+            <h1 class="mb-4">Documentation</h1>
+            <p class="lead">Comprehensive guides for using the platform</p>
+            
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5>📚 Navigation</h5>
+                        </div>
+                        <div class="list-group list-group-flush">
+                            <a href="#" class="list-group-item list-group-item-action doc-link active" onclick="showDocSection('getting-started', this)">Getting Started</a>
+                            <a href="#" class="list-group-item list-group-item-action doc-link" onclick="showDocSection('data-upload', this)">Data Upload</a>
+                            <a href="#" class="list-group-item list-group-item-action doc-link" onclick="showDocSection('model-building', this)">Model Building</a>
+                            <a href="#" class="list-group-item list-group-item-action doc-link" onclick="showDocSection('training-models', this)">Training Models</a>
+                            <a href="#" class="list-group-item list-group-item-action doc-link" onclick="showDocSection('model-evaluation', this)">Model Evaluation</a>
+                            <a href="#" class="list-group-item list-group-item-action doc-link" onclick="showDocSection('deployment', this)">Deployment</a>
+                            <a href="#" class="list-group-item list-group-item-action doc-link" onclick="showDocSection('api-reference', this)">API Reference</a>
+                            <a href="#" class="list-group-item list-group-item-action doc-link" onclick="showDocSection('troubleshooting', this)">Troubleshooting</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-9">
+                    <!-- Getting Started -->
+                    <div class="doc-content active" id="getting-started">
+                        <div class="card">
+                            <div class="card-body">
+                                <h2>Getting Started</h2>
+                                <p>Welcome to ML Ocean City! Follow these steps to build your first model:</p>
+                                <ol>
+                                    <li><strong>Upload Data:</strong> Use the Data Uploader to import your dataset</li>
+                                    <li><strong>Build Model:</strong> Configure your model in the Model Builder</li>
+                                    <li><strong>Train:</strong> Monitor training progress in the Trainer</li>
+                                    <li><strong>Evaluate:</strong> Check performance in the Evaluator</li>
+                                    <li><strong>Deploy:</strong> Launch your model with the Deployer</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Data Upload -->
+                    <div class="doc-content" id="data-upload">
+                        <div class="card">
+                            <div class="card-body">
+                                <h2>Data Upload Guide</h2>
+                                <h4>Supported Formats:</h4>
+                                <ul>
+                                    <li><strong>CSV:</strong> Comma-separated values with headers</li>
+                                    <li><strong>Excel:</strong> .xlsx files (first sheet)</li>
+                                    <li><strong>JSON:</strong> Structured arrays or objects</li>
+                                </ul>
+                                <h4>Data Requirements:</h4>
+                                <ul>
+                                    <li>Clear column headers</li>
+                                    <li>Consistent data types</li>
+                                    <li>Maximum 100MB file size</li>
+                                    <li>Minimum 50 rows for training</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Model Building -->
+                    <div class="doc-content" id="model-building">
+                        <div class="card">
+                            <div class="card-body">
+                                <h2>Model Building</h2>
+                                <h4>Available Algorithms:</h4>
+                                <ul>
+                                    <li><strong>Regression:</strong> Linear, Decision Tree, Random Forest</li>
+                                    <li><strong>Classification:</strong> Logistic, SVM, Neural Networks</li>
+                                    <li><strong>Clustering:</strong> K-Means, Hierarchical</li>
+                                    <li><strong>Dimensionality Reduction:</strong> PCA</li>
+                                </ul>
+                                <h4>Configuration Tips:</h4>
+                                <ul>
+                                    <li>Start with simple algorithms</li>
+                                    <li>Use default parameters initially</li>
+                                    <li>Ensure proper target column selection</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Training Models -->
+                    <div class="doc-content" id="training-models">
+                        <div class="card">
+                            <div class="card-body">
+                                <h2>Training Models</h2>
+                                <p>Our platform supports comprehensive training for various machine learning algorithms with automated optimization and monitoring.</p>
+
+                                <h4>Regression Models</h4>
+                                <ul>
+                                    <li><strong>Linear Regression:</strong> Simple linear relationships, fast training (1-2 minutes)</li>
+                                    <li><strong>Decision Tree Regression:</strong> Non-linear patterns, interpretable results (2-5 minutes)</li>
+                                    <li><strong>Random Forest Regression:</strong> Ensemble method, robust predictions (5-10 minutes)</li>
+                                    <li><strong>SVM Regression:</strong> Complex patterns, kernel-based learning (3-15 minutes)</li>
+                                </ul>
+
+                                <h4>Classification Models</h4>
+                                <ul>
+                                    <li><strong>Logistic Regression:</strong> Binary/multi-class classification (2-5 minutes)</li>
+                                    <li><strong>Support Vector Machines:</strong> High-dimensional data, kernel methods (5-20 minutes)</li>
+                                    <li><strong>Random Forest Classifier:</strong> Ensemble learning, feature importance (5-15 minutes)</li>
+                                    <li><strong>Neural Networks:</strong> Deep patterns, backpropagation learning (10-30 minutes)</li>
+                                </ul>
+
+                                <h4>Clustering Models</h4>
+                                <ul>
+                                    <li><strong>K-Means Clustering:</strong> Partitioning clusters, centroid-based (3-8 minutes)</li>
+                                    <li><strong>Hierarchical Clustering:</strong> Dendrogram-based, agglomerative approach (5-15 minutes)</li>
+                                </ul>
+
+                                <h4>Dimensionality Reduction</h4>
+                                <ul>
+                                    <li><strong>Principal Component Analysis (PCA):</strong> Linear dimensionality reduction (2-10 minutes)</li>
+                                    <li><strong>t-SNE:</strong> Non-linear visualization, perplexity-based (10-30 minutes)</li>
+                                </ul>
+
+                                <h4>Deep Learning Models</h4>
+                                <ul>
+                                    <li><strong>Neural Networks (MLP):</strong> Multi-layer perceptrons, dense connections (15-45 minutes)</li>
+                                    <li><strong>Convolutional Neural Networks (CNN):</strong> Image processing, convolution layers (30-120 minutes)</li>
+                                    <li><strong>Recurrent Neural Networks (RNN/LSTM):</strong> Sequential data, memory cells (20-90 minutes)</li>
+                                </ul>
+
+                                <h4>Training Process</h4>
+                                <ol>
+                                    <li><strong>Data Preprocessing:</strong>
+                                        <ul>
+                                            <li>Missing value imputation</li>
+                                            <li>Feature scaling and normalization</li>
+                                            <li>Categorical encoding</li>
+                                            <li>Outlier detection and handling</li>
+                                        </ul>
+                                    </li>
+                                    <li><strong>Data Splitting:</strong>
+                                        <ul>
+                                            <li>Training set (70%)</li>
+                                            <li>Validation set (15%)</li>
+                                            <li>Test set (15%)</li>
+                                        </ul>
+                                    </li>
+                                    <li><strong>Model Training:</strong>
+                                        <ul>
+                                            <li>Hyperparameter optimization</li>
+                                            <li>Cross-validation</li>
+                                            <li>Early stopping for neural networks</li>
+                                            <li>Regularization techniques</li>
+                                        </ul>
+                                    </li>
+                                    <li><strong>Model Evaluation:</strong>
+                                        <ul>
+                                            <li>Performance metrics calculation</li>
+                                            <li>Confusion matrix generation</li>
+                                            <li>Feature importance analysis</li>
+                                            <li>Model comparison</li>
+                                        </ul>
+                                    </li>
+                                </ol>
+
+                                <h4>Monitoring Features</h4>
+                                <ul>
+                                    <li><strong>Real-time Progress:</strong> Live training progress with percentage completion</li>
+                                    <li><strong>Training Logs:</strong> Detailed logging of each training step</li>
+                                    <li><strong>Resource Usage:</strong> CPU/GPU utilization monitoring</li>
+                                    <li><strong>Error Handling:</strong> Automatic error detection and recovery</li>
+                                    <li><strong>Queue Management:</strong> Multiple model training with priority queuing</li>
+                                </ul>
+
+                                <h4>Training Controls</h4>
+                                <ul>
+                                    <li><strong>Start Training:</strong> Begin model training with selected parameters</li>
+                                    <li><strong>Pause/Resume:</strong> Pause training and resume from checkpoint</li>
+                                    <li><strong>Stop Training:</strong> Terminate training and save current model state</li>
+                                    <li><strong>Batch Training:</strong> Train multiple models simultaneously</li>
+                                </ul>
+
+                                <h4>Best Practices</h4>
+                                <ul>
+                                    <li>Start with simple models before complex ones</li>
+                                    <li>Ensure adequate training data (minimum 100 samples per feature)</li>
+                                    <li>Use cross-validation for robust performance estimation</li>
+                                    <li>Monitor for overfitting using validation curves</li>
+                                    <li>Save model checkpoints during long training sessions</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Model Evaluation -->
+                    <div class="doc-content" id="model-evaluation">
+                        <div class="card">
+                            <div class="card-body">
+                                <h2>Model Evaluation</h2>
+                                <h4>Classification Metrics:</h4>
+                                <ul>
+                                    <li>Accuracy, Precision, Recall</li>
+                                    <li>F1-Score, ROC-AUC</li>
+                                    <li>Confusion Matrix</li>
+                                </ul>
+                                <h4>Regression Metrics:</h4>
+                                <ul>
+                                    <li>R² Score, MSE, RMSE</li>
+                                    <li>Mean Absolute Error</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Deployment -->
+                    <div class="doc-content" id="deployment">
+                        <div class="card">
+                            <div class="card-body">
+                                <h2>Model Deployment</h2>
+                                <h4>Deployment Options:</h4>
+                                <ul>
+                                    <li>AWS, GCP, Azure</li>
+                                    <li>REST API endpoints</li>
+                                    <li>Auto-scaling</li>
+                                    <li>Health monitoring</li>
+                                </ul>
+                                <h4>API Usage:</h4>
+                                <pre><code>
+POST /predict
+{
+  "features": [1.0, 2.0, 3.0]
+}
+                                </code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- API Reference -->
+                    <div class="doc-content" id="api-reference">
+                        <div class="card">
+                            <div class="card-body">
+                                <h2>🔌 API Reference</h2>
+                                <h4>Endpoints:</h4>
+                                <ul>
+                                    <li><code>GET /health</code> - Health check</li>
+                                    <li><code>POST /predict</code> - Make predictions</li>
+                                    <li><code>GET /info</code> - Model information</li>
+                                    <li><code>POST /batch-predict</code> - Batch predictions</li>
+                                </ul>
+                                <h4>Authentication:</h4>
+                                <p>Include API key in headers:</p>
+                                <pre><code>Authorization: Bearer YOUR_API_KEY</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Troubleshooting -->
+                    <div class="doc-content" id="troubleshooting">
+                        <div class="card">
+                            <div class="card-body">
+                                <h2>Troubleshooting</h2>
+                                <h4>Common Issues:</h4>
+                                <ul>
+                                    <li><strong>Upload fails:</strong> Check file format and size</li>
+                                    <li><strong>Training errors:</strong> Verify data quality</li>
+                                    <li><strong>Low accuracy:</strong> Try different algorithms</li>
+                                    <li><strong>Deployment issues:</strong> Check configuration</li>
+                                </ul>
+                                <h4>Performance Tips:</h4>
+                                <ul>
+                                    <li>Clean your data before upload</li>
+                                    <li>Start with simple models</li>
+                                    <li>Use feature selection</li>
+                                    <li>Monitor resource usage</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Support Page -->
+    <section id="support" class="page-section">
+        <div class="container mt-4">
+            <h1 class="mb-4">Support Center</h1>
+            <p class="lead">Get help and contact the developer</p>
+            
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-body">
+                            <h2 class="card-title">Developer Contact</h2>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h5>Developer Information</h5>
+                                    <p><strong>Name:</strong> Reaishma N</p>
+                                    <p><strong>Email:</strong> 
+                                        <a href="mailto:vra.9618@gmail.com">vra.9618@gmail.com</a>
+                                    </p>
+                                    <p><strong>GitHub:</strong> 
+                                        <a href="https://github.com/Reaishma" target="_blank">
+                                            https://github.com/Reaishma
+                                        </a>
+                                    </p>
+                                </div>
+                                <div class="col-md-6">
+                                    <h5>🚀 Quick Contact</h5>
+                                    <p>For technical support, feature requests, or bug reports, feel free to reach out via email or GitHub.</p>
+                                    <div class="d-grid gap-2">
+                                        <a href="mailto:vra.9618@gmail.com" class="btn btn-primary">
+                                            📧 Send Email
+                                        </a>
+                                        <a href="https://github.com/Reaishma" target="_blank" class="btn btn-outline-primary">
+                                            🐙 Visit GitHub
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5>💡 Quick Help</h5>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-unstyled">
+                                <li class="mb-2">📚 Check the Documentation section</li>
+                                <li class="mb-2">🔍 Try sample data first</li>
+                                <li class="mb-2">⚙️ Start with default parameters</li>
+                                <li class="mb-2">📊 Monitor training logs</li>
+                                <li class="mb-2">🚀 Test in staging before production</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>🎩 ML Ocean City</h5>
+                    <p>No-code machine learning platform for everyone. Build, train, and deploy ML models without programming knowledge.</p>
+                </div>
+                <div class="col-md-3">
+                    <h6>Quick Links</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-light" onclick="showPage('home')">Home</a></li>
+                        <li><a href="#" class="text-light" onclick="showPage('model-builder')">Model Builder</a></li>
+                        <li><a href="#" class="text-light" onclick="showPage('trainer')">Trainer</a></li>
+                        <li><a href="#" class="text-light" onclick="showPage('gallery')">Model Gallery</a></li>
+                        <li><a href="#" class="text-light" onclick="showPage('uploader')">Data Upload</a></li>
+                        <li><a href="#" class="text-light" onclick="showPage('evaluator')">Evaluator</a></li>
+                        <li><a href="#" class="text-light" onclick="showPage('deployer')">Deployer</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2">
+                    <h6>Resources</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-light" onclick="showPage('docs')">Documentation</a></li>
+                        <li><a href="#" class="text-light" onclick="showPage('support')">Support</a></li>
+                        <li><a href="#" class="text-light" onclick="showDocSection('getting-started')">Getting Started</a></li>
+                        <li><a href="#" class="text-light" onclick="showDocSection('troubleshooting')">Troubleshooting</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h6>Developer Contact</h6>
+                    <p><strong>Reaishma N</strong></p>
+                    <p>Email: <a href="mailto:vra.9618@gmail.com" class="text-light">vra.9618@gmail.com</a></p>
+                    <p>GitHub: <a href="https://github.com/Reaishma" target="_blank" class="text-light">GitHub Profile</a></p>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="text-center">
+                <p>&copy; 2025 ML Ocean City. Built with ❤️ for the machine learning community.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+
+        // Sidebar Functions
+        function toggleSidebar() {
+            const sidebar = document.getElementById('voguesSidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('open');
+        }
+
+        function closeSidebar() {
+            const sidebar = document.getElementById('voguesSidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            
+            sidebar.classList.remove('open');
+            overlay.classList.remove('open');
+        }
+
+        // Close sidebar on ESC key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeSidebar();
+            }
+        });
+
+        // Global variables
+        let currentModel = null;
+        let trainingInterval = null;
+        let models = {
+            'sales-prediction': {
+                name: 'Sales Prediction Model',
+                algorithm: 'Linear Regression',
+                type: 'regression',
+                date: '2025-09-12',
+                dataset: 'sales_data.csv',
+                features: 8,
+                metrics: { r2: '94.2%', mse: '125.3', rmse: '11.2', mae: '8.4' },
+                deploymentType: 'prediction-api',
+                useCase: 'Predicts sales amounts based on historical data'
+            },
+            'customer-segmentation': {
+                name: 'Customer Segmentation',
+                algorithm: 'K-Means Clustering',
+                type: 'clustering',
+                date: '2025-09-11',
+                dataset: 'customer_data.csv',
+                features: 12,
+                metrics: { silhouette: '0.73', clusters: '5', inertia: '2847.2', calinski_harabasz: '156.8' },
+                deploymentType: 'clustering-api',
+                useCase: 'Segments customers into behavioral groups'
+            },
+            'fraud-detection': {
+                name: 'Fraud Detection Model',
+                algorithm: 'Random Forest',
+                type: 'classification',
+                date: '2025-09-10',
+                dataset: 'fraud_data.csv',
+                features: 15,
+                metrics: { accuracy: '96.8%', precision: '0.94', recall: '0.92', f1: '0.93' },
+                deploymentType: 'classification-api',
+                useCase: 'Detects fraudulent transactions in real-time'
+            },
+            'email-classification': {
+                name: 'Email Classification',
+                algorithm: 'Logistic Regression',
+                type: 'classification',
+                date: '2025-09-09',
+                dataset: 'email_data.csv',
+                features: 20,
+                metrics: { accuracy: '92.4%', precision: '0.89', recall: '0.95', f1: '0.92' },
+                deploymentType: 'text-classification-api',
+                useCase: 'Classifies emails as spam or legitimate'
+            },
+            'image-recognition': {
+                name: 'Image Recognition',
+                algorithm: 'Support Vector Machine',
+                type: 'classification',
+                date: '2025-09-08',
+                dataset: 'image_data.csv',
+                features: 784,
+                metrics: { accuracy: '89.7%', precision: '0.87', recall: '0.91', f1: '0.89' },
+                deploymentType: 'image-classification-api',
+                useCase: 'Recognizes objects in images using SVM'
+            },
+            'product-clustering': {
+                name: 'Product Clustering',
+                algorithm: 'Hierarchical Clustering',
+                type: 'clustering',
+                date: '2025-09-07',
+                dataset: 'product_data.csv',
+                features: 18,
+                metrics: { silhouette: '0.68', clusters: '7', cophenetic: '0.82', davies_bouldin: '1.34' },
+                deploymentType: 'hierarchical-clustering-api',
+                useCase: 'Groups similar products using hierarchical methods'
+            },
+            'data-visualization': {
+                name: 'Data Visualization',
+                algorithm: 'Principal Component Analysis',
+                type: 'dimensionality_reduction',
+                date: '2025-09-06',
+                dataset: 'high_dim_data.csv',
+                features: 50,
+                metrics: { variance_explained: '85.2%', components: '5', cumulative_variance: '92.8%', reconstruction_error: '0.15' },
+                deploymentType: 'dimensionality-reduction-api',
+                useCase: 'Reduces high-dimensional data for visualization'
+            },
+            'price-prediction': {
+                name: 'Price Prediction',
+                algorithm: 'Neural Network',
+                type: 'neural_networks',
+                date: '2025-09-05',
+                dataset: 'price_data.csv',
+                features: 25,
+                metrics: { r2: '93.6%', mse: '145.2', rmse: '12.1', mae: '9.8' },
+                deploymentType: 'neural-network-api',
+                useCase: 'Predicts prices using multi-layer neural networks'
+            },
+            'image-classification': {
+                name: 'Image Classification',
+                algorithm: 'Convolutional Neural Network',
+                type: 'deep_learning',
+                date: '2025-09-04',
+                dataset: 'image_dataset/',
+                features: 2048,
+                metrics: { accuracy: '97.3%', precision: '0.96', recall: '0.98', f1: '0.97' },
+                deploymentType: 'cnn-api',
+                useCase: 'Advanced image classification using deep CNNs'
+            },
+            'text-analysis': {
+                name: 'Text Analysis',
+                algorithm: 'Recurrent Neural Network',
+                type: 'deep_learning',
+                date: '2025-09-03',
+                dataset: 'text_corpus.csv',
+                features: 512,
+                metrics: { accuracy: '91.8%', precision: '0.90', recall: '0.93', f1: '0.91' },
+                deploymentType: 'rnn-api',
+                useCase: 'Sentiment analysis and text classification using RNNs'
+            }
+        };
+
+        // Sample datasets
+        let sampleData = {
+            sales: {
+                name: 'Sales Data Sample',
+                headers: ['product_id', 'price', 'quantity', 'discount', 'sales_amount', 'month', 'region'],
+                data: [
+                    ['P001', 29.99, 5, 0.1, 134.96, 'Jan', 'North'],
+                    ['P002', 15.50, 3, 0.0, 46.50, 'Jan', 'South'],
+                    ['P003', 89.99, 1, 0.15, 76.49, 'Feb', 'East'],
+                    ['P004', 45.00, 2, 0.2, 72.00, 'Feb', 'West'],
+                    ['P005', 12.99, 8, 0.05, 98.72, 'Mar', 'North']
+                ]
+            },
+            customer: {
+                name: 'Customer Data Sample',
+                headers: ['customer_id', 'age', 'income', 'spending_score', 'annual_purchases', 'membership_years'],
+                data: [
+                    ['C001', 25, 45000, 75, 12, 2],
+                    ['C002', 35, 65000, 60, 8, 5],
+                    ['C003', 45, 85000, 40, 15, 10],
+                    ['C004', 28, 35000, 85, 20, 1],
+                    ['C005', 55, 95000, 25, 5, 15]
+                ]
+            },
+            fraud: {
+                name: 'Fraud Data Sample',
+                headers: ['transaction_id', 'amount', 'merchant_type', 'hour', 'day_of_week', 'is_fraud'],
+                data: [
+                    ['T001', 125.50, 'retail', 14, 'Mon', 0],
+                    ['T002', 2500.00, 'online', 2, 'Sat', 1],
+                    ['T003', 45.99, 'grocery', 18, 'Wed', 0],
+                    ['T004', 1200.00, 'atm', 23, 'Sun', 1],
+                    ['T005', 89.99, 'gas', 9, 'Fri', 0]
+                ]
+            }
+        };
+
+        // Page navigation
+        function showPage(pageId) {
+            const pages = document.querySelectorAll('.page-section');
+            pages.forEach(page => page.classList.remove('active'));
+            
+            const targetPage = document.getElementById(pageId);
+            if (targetPage) {
+                targetPage.classList.add('active');
+            }
+            
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => link.classList.remove('active'));
+        }
+
+        // Model Builder Functions
+        document.querySelectorAll('.model-type-card').forEach(card => {
+            card.addEventListener('click', function() {
+                document.querySelectorAll('.model-type-card').forEach(c => c.classList.remove('selected'));
+                this.classList.add('selected');
+                
+                document.getElementById('step2').style.display = 'block';
+                document.getElementById('step3').style.display = 'block';
+                document.getElementById('step4').style.display = 'block';
+                
+                loadModelConfig(this.dataset.type);
+            });
+        });
+
+        function loadModelConfig(type) {
+            const container = document.getElementById('model-config');
+            let html = '';
+            
+            switch(type) {
+                case 'regression':
+                    html = `
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="form-label">Algorithm</label>
+                                <select class="form-select" id="algorithm-select">
+                                    <option value="linear_regression">Linear Regression</option>
+                                    <option value="decision_tree">Decision Tree</option>
+                                    <option value="random_forest">Random Forest</option>
+                                    <option value="svm">Support Vector Machine</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Max Iterations</label>
+                                <input type="number" class="form-control" value="1000">
+                            </div>
+                        </div>
+                    `;
+                    break;
+                case 'classification':
+                    html = `
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="form-label">Algorithm</label>
+                                <select class="form-select" id="algorithm-select">
+                                    <option value="logistic_regression">Logistic Regression</option>
+                                    <option value="svm">Support Vector Machine</option>
+                                    <option value="random_forest">Random Forest</option>
+                                    <option value="decision_tree">Decision Tree</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Max Depth</label>
+                                <input type="number" class="form-control" value="10">
+                            </div>
+                        </div>
+                    `;
+                    break;
+                case 'clustering':
+                    html = `
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="form-label">Algorithm</label>
+                                <select class="form-select" id="algorithm-select">
+                                    <option value="kmeans">K-Means</option>
+                                    <option value="hierarchical">Hierarchical Clustering</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Number of Clusters</label>
+                                <input type="number" class="form-control" value="3" min="2">
+                            </div>
+                        </div>
+                    `;
+                    break;
+                case 'dimensionality_reduction':
+                    html = `
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="form-label">Algorithm</label>
+                                <select class="form-select" id="algorithm-select">
+                                    <option value="pca">Principal Component Analysis</option>
+                                    <option value="tsne">t-SNE</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Components</label>
+                                <input type="number" class="form-control" value="2" min="2">
+                            </div>
+                        </div>
+                    `;
+                    break;
+                case 'neural_networks':
+                    html = `
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="form-label">Network Type</label>
+                                <select class="form-select" id="algorithm-select">
+                                    <option value="mlp">Multi-Layer Perceptron</option>
+                                    <option value="deep_nn">Deep Neural Network</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Hidden Layers</label>
+                                <input type="number" class="form-control" value="3" min="1">
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Learning Rate</label>
+                                <input type="number" class="form-control" value="0.001" step="0.001">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Epochs</label>
+                                <input type="number" class="form-control" value="100">
+                            </div>
+                        </div>
+                    `;
+                    break;
+                case 'deep_learning':
+                    html = `
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="form-label">Architecture</label>
+                                <select class="form-select" id="algorithm-select">
+                                    <option value="cnn">Convolutional Neural Network</option>
+                                    <option value="rnn">Recurrent Neural Network</option>
+                                    <option value="lstm">Long Short-Term Memory</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Batch Size</label>
+                                <input type="number" class="form-control" value="32">
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Learning Rate</label>
+                                <input type="number" class="form-control" value="0.0001" step="0.0001">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Epochs</label>
+                                <input type="number" class="form-control" value="50">
+                            </div>
+                        </div>
+                    `;
+                    break;
+            }
+            container.innerHTML = html;
+        }
+
+        // Create Model
+        document.getElementById('create-model').addEventListener('click', function() {
+            const modelName = document.getElementById('model-name').value;
+            const dataset = document.getElementById('dataset-select').value;
+            const targetColumn = document.getElementById('target-column').value;
+            const selectedType = document.querySelector('.model-type-card.selected');
+            
+            if (!modelName) {
+                showNotification('Please enter a model name', 'warning');
+                return;
+            }
+            
+            if (!selectedType) {
+                showNotification('Please select a model type', 'warning');
+                return;
+            }
+            
+            if (!dataset || !targetColumn) {
+                showNotification('Please select dataset and target column', 'warning');
+                return;
+            }
+            
+            const modelType = selectedType.dataset.type;
+            const algorithm = document.getElementById('algorithm-select')?.value || 'default';
+            
+            const statusDiv = document.getElementById('model-creation-status');
+            statusDiv.innerHTML = `
+                <div class="alert alert-success">
+                    <strong>✅ Model "${modelName}" created successfully!</strong><br>
+                    <div class="progress mt-2 mb-2">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-info" style="width: 100%">
+                            Initializing Training...
+                        </div>
+                    </div>
+                    <small>Redirecting to Training page in 3 seconds...</small>
+                </div>
+            `;
+            
+            // Add to available models
+            const container = document.getElementById('available-models');
+            const newModel = document.createElement('div');
+            newModel.className = 'card mb-2 card-hover';
+            newModel.innerHTML = `
+                <div class="card-body">
+                    <h6 class="card-title">${modelName}</h6>
+                    <p class="card-text small text-muted">${algorithm}</p>
+                    <span class="badge bg-warning">Training</span>
+                </div>
+            `;
+            container.appendChild(newModel);
+            
+            // Add to training queue
+            addToTrainingQueue(modelName, algorithm, dataset);
+            
+            showNotification(`Model "${modelName}" created and training started!`, 'success');
+            
+            // Auto-redirect to trainer page
+            setTimeout(() => {
+                showPage('trainer');
+                // Start training simulation for this model
+                startModelTraining(modelName);
+            }, 3000);
+        });
+        
+        function addToTrainingQueue(modelName, algorithm, dataset) {
+            const trainingQueue = document.getElementById('training-queue');
+            const newTrainingJob = document.createElement('div');
+            newTrainingJob.className = 'training-job mb-3 p-3 border rounded';
+            newTrainingJob.innerHTML = `
+                <h6>${modelName} - ${algorithm}</h6>
+                <div class="progress mb-2">
+                    <div class="progress-bar training-progress bg-info" style="width: 0%">0%</div>
+                </div>
+                <small class="text-muted">Dataset: ${dataset} | Status: Starting</small>
+            `;
+            trainingQueue.appendChild(newTrainingJob);
+            
+            // Update statistics
+            const totalModels = document.getElementById('total-models');
+            const trainingModels = document.getElementById('training-models');
+            totalModels.textContent = parseInt(totalModels.textContent) + 1;
+            trainingModels.textContent = parseInt(trainingModels.textContent) + 1;
+        }
+        
+        function startModelTraining(modelName) {
+            const trainingJob = Array.from(document.querySelectorAll('.training-job h6'))
+                .find(h6 => h6.textContent.includes(modelName))?.parentElement;
+            
+            if (!trainingJob) return;
+            
+            const progressBar = trainingJob.querySelector('.progress-bar');
+            const statusText = trainingJob.querySelector('small');
+            let progress = 0;
+            
+            addLog(`🚀 Starting training for ${modelName}`);
+            statusText.innerHTML = statusText.innerHTML.replace('Starting', 'Training');
+            
+            const trainingInterval = setInterval(() => {
+                progress += Math.random() * 15;
+                if (progress >= 100) {
+                    progress = 100;
+                    progressBar.style.width = '100%';
+                    progressBar.textContent = '100%';
+                    progressBar.classList.remove('bg-info', 'training-progress');
+                    progressBar.classList.add('bg-success');
+                    statusText.innerHTML = statusText.innerHTML.replace('Training', 'Completed');
+                    
+                    addLog(`✅ Training completed for ${modelName} - Ready for deployment!`);
+                    showNotification(`${modelName} training completed! Ready for deployment.`, 'success');
+                    
+                    // Update statistics
+                    const trainingModels = document.getElementById('training-models');
+                    trainingModels.textContent = Math.max(0, parseInt(trainingModels.textContent) - 1);
+                    
+                    clearInterval(trainingInterval);
+                    
+                    // Auto-redirect to deployment after completion
+                    setTimeout(() => {
+                        if (confirm(`${modelName} is ready! Would you like to deploy it now?`)) {
+                            showPage('deployer');
+                            // Auto-select the model in deployment
+                            const deploySelect = document.getElementById('model-select-deploy');
+                            const newOption = document.createElement('option');
+                            newOption.value = modelName.toLowerCase().replace(/\s+/g, '-');
+                            newOption.textContent = modelName;
+                            deploySelect.appendChild(newOption);
+                            deploySelect.value = newOption.value;
+                        }
+                    }, 2000);
+                } else {
+                    progressBar.style.width = progress + '%';
+                    progressBar.textContent = Math.round(progress) + '%';
+                }
+            }, 2000);
+        }
+
+        // Gallery Functions
+        function filterModels() {
+            const typeFilter = document.getElementById('filter-type').value;
+            const statusFilter = document.getElementById('filter-status').value;
+            const cards = document.querySelectorAll('.model-card');
+            
+            cards.forEach(card => {
+                const type = card.dataset.type;
+                const status = card.dataset.status;
+                
+                const showType = !typeFilter || type === typeFilter;
+                const showStatus = !statusFilter || status === statusFilter;
+                
+                card.style.display = showType && showStatus ? 'block' : 'none';
+            });
+        }
+
+        function searchModels() {
+            const searchTerm = document.getElementById('search-models').value.toLowerCase();
+            const cards = document.querySelectorAll('.model-card');
+            
+            cards.forEach(card => {
+                const title = card.querySelector('.card-title').textContent.toLowerCase();
+                card.style.display = title.includes(searchTerm) ? 'block' : 'none';
+            });
+        }
+
+        function viewModelDetails(modelId) {
+            const model = models[modelId];
+            if (!model) return;
+            
+            document.getElementById('modelDetailsTitle').textContent = model.name;
+            document.getElementById('modelDetailsBody').innerHTML = `
+                <h6>Model Information</h6>
+                <p><strong>Algorithm:</strong> ${model.algorithm}</p>
+                <p><strong>Training Date:</strong> ${model.date}</p>
+                <p><strong>Dataset:</strong> ${model.dataset}</p>
+                <p><strong>Features:</strong> ${model.features}</p>
+                
+                <h6>Performance Metrics</h6>
+                <div class="row">
+                    ${Object.entries(model.metrics).map(([key, value]) => `
+                        <div class="col-md-6">
+                            <div class="metric-card">
+                                <div class="metric-value">${value}</div>
+                                <div>${key.toUpperCase()}</div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            
+            new bootstrap.Modal(document.getElementById('modelDetailsModal')).show();
+        }
+
+        function deployModel(modelId) {
+            showNotification(`Deploying ${modelId} model...`, 'info');
+            setTimeout(() => {
+                showNotification('Model deployed successfully!', 'success');
+            }, 2000);
+        }
+
+        // Data Uploader Functions
+        function loadSampleData(type) {
+            const data = sampleData[type];
+            if (!data) return;
+            
+            document.getElementById('file-preview').style.display = 'block';
+            document.getElementById('file-list').innerHTML = `
+                <div class="alert alert-info">
+                    <h6>${data.name}</h6>
+                    <p class="mb-1">Rows: ${data.data.length}, Columns: ${data.headers.length}</p>
+                    <small>Sample data loaded successfully</small>
+                </div>
+            `;
+            
+            // Create preview table
+            const table = document.createElement('table');
+            table.className = 'table table-sm sample-data-table';
+            
+            const thead = document.createElement('thead');
+            const headerRow = document.createElement('tr');
+            data.headers.forEach(header => {
+                const th = document.createElement('th');
+                th.textContent = header;
+                headerRow.appendChild(th);
+            });
+            thead.appendChild(headerRow);
+            table.appendChild(thead);
+            
+            const tbody = document.createElement('tbody');
+            data.data.forEach(row => {
+                const tr = document.createElement('tr');
+                row.forEach(cell => {
+                    const td = document.createElement('td');
+                    td.textContent = cell;
+                    tr.appendChild(td);
+                });
+                tbody.appendChild(tr);
+            });
+            table.appendChild(tbody);
+            
+            document.getElementById('data-preview').innerHTML = '<h6>Data Preview:</h6>';
+            document.getElementById('data-preview').appendChild(table);
+            
+            showNotification(`${data.name} loaded successfully!`, 'success');
+        }
+
+        // File upload handling
+        document.getElementById('fileInput').addEventListener('change', function() {
+            const files = Array.from(this.files);
+            handleFileUpload(files);
+        });
+
+        function handleFileUpload(files) {
+            if (!files.length) return;
+            
+            showUploadProgress(0);
+            
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += 20;
+                showUploadProgress(progress);
+                
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        hideUploadProgress();
+                        displayUploadedFiles(files);
+                    }, 500);
+                }
+            }, 300);
+        }
+
+        function showUploadProgress(percentage) {
+            document.getElementById('upload-progress').style.display = 'block';
+            const progressBar = document.querySelector('#upload-progress .progress-bar');
+            progressBar.style.width = percentage + '%';
+            progressBar.textContent = percentage + '%';
+        }
+
+        function hideUploadProgress() {
+            document.getElementById('upload-progress').style.display = 'none';
+        }
+
+        function displayUploadedFiles(files) {
+            document.getElementById('file-preview').style.display = 'block';
+            const fileList = document.getElementById('file-list');
+            
+            fileList.innerHTML = files.map(file => `
+                <div class="alert alert-success">
+                    <h6>${file.name}</h6>
+                    <p class="mb-1">Size: ${formatFileSize(file.size)}</p>
+                    <small>Uploaded and ready for training</small>
+                </div>
+            `).join('');
+            
+            showNotification('Files uploaded successfully!', 'success');
+        }
+
+        // Training Functions
+        function startAllTraining() {
+            const jobs = document.querySelectorAll('.training-job');
+            jobs.forEach((job, index) => {
+                setTimeout(() => {
+                    const progressBar = job.querySelector('.progress-bar');
+                    const modelName = job.querySelector('h6').textContent;
+                    
+                    if (!progressBar.classList.contains('bg-success')) {
+                        progressBar.classList.add('training-progress');
+                        addLog(`Starting training for ${modelName}`);
+                        
+                        // Simulate training progress
+                        let progress = parseInt(progressBar.style.width) || 0;
+                        const progressInterval = setInterval(() => {
+                            progress += Math.random() * 10;
+                            if (progress >= 100) {
+                                progress = 100;
+                                progressBar.classList.remove('bg-warning', 'training-progress');
+                                progressBar.classList.add('bg-success');
+                                addLog(`✅ Training completed for ${modelName}`);
+                                clearInterval(progressInterval);
+                            }
+                            progressBar.style.width = progress + '%';
+                            progressBar.textContent = Math.round(progress) + '%';
+                        }, 1000);
+                    }
+                }, index * 2000);
+            });
+            
+            showNotification('Training started for all models!', 'success');
+        }
+
+        function stopTraining() {
+            clearInterval(trainingInterval);
+            addLog('⏹️ Training stopped by user');
+            showNotification('Training stopped', 'warning');
+        }
+
+        function pauseTraining() {
+            clearInterval(trainingInterval);
+            addLog('⏸️ Training paused');
+            showNotification('Training paused', 'info');
+        }
+
+        function restartTraining() {
+            addLog('🔄 Training restarted');
+            startAllTraining();
+        }
+
+        function clearTrainingLogs() {
+            document.getElementById('log-output').innerHTML = '';
+            showNotification('Logs cleared', 'info');
+        }
+
+        function addLog(message) {
+            const logOutput = document.getElementById('log-output');
+            const timestamp = new Date().toLocaleTimeString();
+            const logLine = document.createElement('div');
+            logLine.className = 'log-line';
+            logLine.textContent = `[${timestamp}] ${message}`;
+            logOutput.appendChild(logLine);
+            logOutput.scrollTop = logOutput.scrollHeight;
+        }
+
+        // Evaluator Functions
+        function updateEvaluationResults() {
+            const selectedModel = document.getElementById('model-select-eval').value;
+            const model = models[selectedModel];
+            
+            if (!model) return;
+            
+            // Update model info
+            document.getElementById('info-name').textContent = model.name;
+            document.getElementById('info-algorithm').textContent = model.algorithm;
+            document.getElementById('info-date').textContent = model.date;
+            document.getElementById('info-dataset').textContent = model.dataset;
+            document.getElementById('info-features').textContent = model.features;
+            
+            // Update metrics based on model type
+            const metrics = model.metrics;
+            const keys = Object.keys(metrics);
+            
+            document.getElementById('metric1').textContent = metrics[keys[0]] || '0';
+            document.getElementById('metric1-label').textContent = keys[0]?.toUpperCase() || 'Metric 1';
+            
+            document.getElementById('metric2').textContent = metrics[keys[1]] || '0';
+            document.getElementById('metric2-label').textContent = keys[1]?.toUpperCase() || 'Metric 2';
+            
+            document.getElementById('metric3').textContent = metrics[keys[2]] || '0';
+            document.getElementById('metric3-label').textContent = keys[2]?.toUpperCase() || 'Metric 3';
+            
+            document.getElementById('metric4').textContent = metrics[keys[3]] || '0';
+            document.getElementById('metric4-label').textContent = keys[3]?.toUpperCase() || 'Metric 4';
+        }
+
+        function evaluateModel() {
+            const selectedModel = document.getElementById('model-select-eval').value;
+            if (!selectedModel) {
+                showNotification('Please select a model to evaluate', 'warning');
+                return;
+            }
+            
+            showLoading('Evaluating model...');
+            setTimeout(() => {
+                hideLoading();
+                updateEvaluationResults();
+                showNotification('Model evaluated successfully!', 'success');
+            }, 2000);
+        }
+
+        function compareModels() {
+            const comparisonResults = document.getElementById('comparison-results');
+            const tableBody = document.getElementById('comparison-table');
+            
+            // Create comparison data
+            const comparison = Object.entries(models).map(([id, model]) => {
+                const primaryMetric = Object.values(model.metrics)[0];
+                const score = parseFloat(primaryMetric.replace('%', '')) || parseFloat(primaryMetric);
+                return { id, model, score, primaryMetric };
+            }).sort((a, b) => b.score - a.score);
+            
+            tableBody.innerHTML = comparison.map((item, index) => `
+                <tr>
+                    <td>${item.model.name}</td>
+                    <td>${item.model.algorithm}</td>
+                    <td>${Object.keys(item.model.metrics)[0]}</td>
+                    <td>${item.primaryMetric}</td>
+                    <td>#${index + 1}</td>
+                </tr>
+            `).join('');
+            
+            comparisonResults.style.display = 'block';
+            showNotification('Model comparison completed!', 'success');
+        }
+
+        function reEvaluateModel() {
+            evaluateModel();
+        }
+
+        function deploySelectedModel() {
+            const selectedModel = document.getElementById('model-select-eval').value;
+            if (!selectedModel) {
+                showNotification('Please select a model first', 'warning');
+                return;
+            }
+            showPage('deployer');
+            document.getElementById('model-select-deploy').value = selectedModel;
+        }
+
+        function generateReport() {
+            showNotification('Generating evaluation report...', 'info');
+            setTimeout(() => {
+                showNotification('Report generated and downloaded!', 'success');
+            }, 2000);
+        }
+
+        function exportResults() {
+            showNotification('Exporting evaluation results...', 'info');
+            setTimeout(() => {
+                showNotification('Results exported successfully!', 'success');
+            }, 1500);
+        }
+
+        // Deployer Functions
+        function deployModel() {
+            const selectedModel = document.getElementById('model-select-deploy').value;
+            const environment = document.getElementById('environment-select').value;
+            const provider = document.getElementById('cloud-provider').value;
+            const apiName = document.getElementById('api-name').value || 'ml-api';
+            
+            if (!selectedModel) {
+                showNotification('Please select a model to deploy', 'warning');
+                return;
+            }
+            
+            showLoading('Deploying model...');
+            
+            setTimeout(() => {
+                hideLoading();
+                
+                const model = models[selectedModel];
+                const deploymentId = Math.random().toString(36).substr(2, 8);
+                
+                // Generate URLs based on model
+                const baseUrl = `https://${apiName}-${deploymentId}.${provider === 'aws' ? 'amazonaws.com' : provider === 'gcp' ? 'googleusercontent.com' : 'azure.net'}`;
+                const predictUrl = `${baseUrl}/${model?.deploymentType || 'predict'}`;
+                const healthUrl = `${baseUrl}/health`;
+                
+                // Update deployment results
+                document.getElementById('api-base-url').textContent = baseUrl;
+                document.getElementById('prediction-url').textContent = predictUrl;
+                document.getElementById('health-url').textContent = healthUrl;
+                
+                // Generate model-specific API usage examples
+                generateApiExample(model, predictUrl);
+                generateResponseExample(model);
+                
+                document.getElementById('deployment-results').style.display = 'block';
+                showNotification(`${model?.name || 'Model'} deployed successfully!`, 'success');
+            }, 3000);
+        }
+        
+        function generateApiExample(model, predictUrl) {
+            let apiExample = '';
+            
+            switch(model?.type) {
+                case 'regression':
+                    apiExample = `
+# ${model.useCase}
+curl -X POST "${predictUrl}" \\
+  -H "Content-Type: application/json" \\
+  -H "Authorization: Bearer YOUR_API_KEY" \\
+  -d '{
+    "features": [29.99, 5, 0.1, 1, 2025],
+    "feature_names": ["price", "quantity", "discount", "month", "year"]
+  }'`;
+                    break;
+                
+                case 'classification':
+                    if (model.algorithm === 'Logistic Regression') {
+                        apiExample = `
+# ${model.useCase}
+curl -X POST "${predictUrl}" \\
+  -H "Content-Type: application/json" \\
+  -H "Authorization: Bearer YOUR_API_KEY" \\
+  -d '{
+    "text": "Free money! Click here to claim your prize!",
+    "sender": "unknown@suspicious.com",
+    "subject": "You won!"
+  }'`;
+                    } else if (model.algorithm === 'Support Vector Machine') {
+                        apiExample = `
+# ${model.useCase}  
+curl -X POST "${predictUrl}" \\
+  -H "Content-Type: application/json" \\
+  -H "Authorization: Bearer YOUR_API_KEY" \\
+  -d '{
+    "image_data": "base64_encoded_image_string",
+    "image_size": [28, 28],
+    "format": "grayscale"
+  }'`;
+                    } else {
+                        apiExample = `
+# ${model.useCase}
+curl -X POST "${predictUrl}" \\
+  -H "Content-Type: application/json" \\
+  -H "Authorization: Bearer YOUR_API_KEY" \\
+  -d '{
+    "transaction_amount": 2500.00,
+    "merchant_type": "online",
+    "time_of_day": 2,
+    "day_of_week": 6,
+    "account_age": 30
+  }'`;
+                    }
+                    break;
+                
+                case 'clustering':
+                    if (model.algorithm === 'K-Means Clustering') {
+                        apiExample = `
+# ${model.useCase}
+curl -X POST "${predictUrl}" \\
+  -H "Content-Type: application/json" \\
+  -H "Authorization: Bearer YOUR_API_KEY" \\
+  -d '{
+    "customer_data": {
+      "age": 35,
+      "income": 65000,
+      "spending_score": 60,
+      "annual_purchases": 8
+    }
+  }'`;
+                    } else {
+                        apiExample = `
+# ${model.useCase}
+curl -X POST "${predictUrl}" \\
+  -H "Content-Type: application/json" \\
+  -H "Authorization: Bearer YOUR_API_KEY" \\
+  -d '{
+    "product_features": [4.5, 299.99, 15, 8.2, 3.8],
+    "feature_names": ["rating", "price", "reviews", "shipping_score", "return_rate"]
+  }'`;
+                    }
+                    break;
+                
+                case 'dimensionality_reduction':
+                    apiExample = `
+# ${model.useCase}
+curl -X POST "${predictUrl}" \\
+  -H "Content-Type: application/json" \\
+  -H "Authorization: Bearer YOUR_API_KEY" \\
+  -d '{
+    "high_dim_data": [1.2, 3.4, 2.1, 4.8, 0.9, 2.7, 3.3, 1.8, 4.2, 2.9],
+    "n_components": 2,
+    "return_explained_variance": true
+  }'`;
+                    break;
+                
+                case 'neural_networks':
+                    apiExample = `
+# ${model.useCase}
+curl -X POST "${predictUrl}" \\
+  -H "Content-Type: application/json" \\
+  -H "Authorization: Bearer YOUR_API_KEY" \\
+  -d '{
+    "features": [2500, 3, 2, 1800, 2020, 1, 0],
+    "feature_names": ["sqft", "bedrooms", "bathrooms", "year_built", "year_sold", "garage", "pool"]
+  }'`;
+                    break;
+                
+                case 'deep_learning':
+                    if (model.algorithm === 'Convolutional Neural Network') {
+                        apiExample = `
+# ${model.useCase}
+curl -X POST "${predictUrl}" \\
+  -H "Content-Type: application/json" \\
+  -H "Authorization: Bearer YOUR_API_KEY" \\
+  -d '{
+    "image": "base64_encoded_image_string",
+    "image_format": "jpg",
+    "resize_to": [224, 224],
+    "top_k": 5
+  }'`;
+                    } else {
+                        apiExample = `
+# ${model.useCase}
+curl -X POST "${predictUrl}" \\
+  -H "Content-Type: application/json" \\
+  -H "Authorization: Bearer YOUR_API_KEY" \\
+  -d '{
+    "text": "I love this product! It exceeded my expectations.",
+    "max_sequence_length": 512,
+    "return_confidence": true
+  }'`;
+                    }
+                    break;
+                
+                default:
+                    apiExample = `
+curl -X POST "${predictUrl}" \\
+  -H "Content-Type: application/json" \\
+  -H "Authorization: Bearer YOUR_API_KEY" \\
+  -d '{
+    "features": [1.0, 2.0, 3.0, 4.0]
+  }'`;
+            }
+            
+            document.getElementById('api-example').textContent = apiExample;
+        }
+        
+        function generateResponseExample(model) {
+            let responseExample = '';
+            
+            switch(model?.type) {
+                case 'regression':
+                    responseExample = `{
+  "prediction": 1250.75,
+  "confidence_interval": [1180.25, 1321.25],
+  "model_version": "v1.2",
+  "timestamp": "2025-09-13T10:30:00Z",
+  "feature_importance": {
+    "price": 0.45,
+    "quantity": 0.32,
+    "discount": 0.23
+  }
+}`;
+                    break;
+                
+                case 'classification':
+                    if (model.algorithm === 'Logistic Regression') {
+                        responseExample = `{
+  "prediction": "spam",
+  "probability": {
+    "spam": 0.89,
+    "legitimate": 0.11
+  },
+  "confidence": 0.89,
+  "timestamp": "2025-09-13T10:30:00Z",
+  "model_version": "v2.1"
+}`;
+                    } else if (model.algorithm === 'Support Vector Machine') {
+                        responseExample = `{
+  "prediction": "cat",
+  "confidence": 0.87,
+  "probabilities": {
+    "cat": 0.87,
+    "dog": 0.13
+  },
+  "processing_time_ms": 245,
+  "timestamp": "2025-09-13T10:30:00Z"
+}`;
+                    } else {
+                        responseExample = `{
+  "prediction": "fraud",
+  "risk_score": 0.94,
+  "probability": {
+    "fraud": 0.94,
+    "legitimate": 0.06
+  },
+  "risk_factors": ["high_amount", "unusual_time", "new_merchant"],
+  "timestamp": "2025-09-13T10:30:00Z"
+}`;
+                    }
+                    break;
+                
+                case 'clustering':
+                    if (model.algorithm === 'K-Means Clustering') {
+                        responseExample = `{
+  "cluster": 2,
+  "cluster_name": "High-Value Customers",
+  "distance_to_centroid": 0.23,
+  "cluster_characteristics": {
+    "avg_income": 68000,
+    "avg_spending": 75,
+    "segment_description": "High income, high spending customers"
+  },
+  "timestamp": "2025-09-13T10:30:00Z"
+}`;
+                    } else {
+                        responseExample = `{
+  "cluster_id": 4,
+  "cluster_level": 3,
+  "similarity_products": ["product_123", "product_456", "product_789"],
+  "dendrogram_path": [1, 3, 4],
+  "cluster_description": "Premium electronics category",
+  "timestamp": "2025-09-13T10:30:00Z"
+}`;
+                    }
+                    break;
+                
+                case 'dimensionality_reduction':
+                    responseExample = `{
+  "reduced_dimensions": [2.34, -1.67],
+  "explained_variance_ratio": [0.68, 0.17],
+  "cumulative_variance": 0.85,
+  "original_dimensions": 50,
+  "reduced_dimensions_count": 2,
+  "timestamp": "2025-09-13T10:30:00Z"
+}`;
+                    break;
+                
+                case 'neural_networks':
+                    responseExample = `{
+  "prediction": 425000,
+  "confidence": 0.91,
+  "prediction_interval": [395000, 455000],
+  "neural_network_layers": 3,
+  "activation_values": [0.82, 0.76, 0.91],
+  "timestamp": "2025-09-13T10:30:00Z"
+}`;
+                    break;
+                
+                case 'deep_learning':
+                    if (model.algorithm === 'Convolutional Neural Network') {
+                        responseExample = `{
+  "predictions": [
+    {"class": "dog", "confidence": 0.94},
+    {"class": "puppy", "confidence": 0.89},
+    {"class": "golden_retriever", "confidence": 0.76}
+  ],
+  "top_prediction": "dog",
+  "confidence": 0.94,
+  "processing_time_ms": 342,
+  "model_architecture": "CNN-ResNet50",
+  "timestamp": "2025-09-13T10:30:00Z"
+}`;
+                    } else {
+                        responseExample = `{
+  "sentiment": "positive",
+  "confidence": 0.92,
+  "sentiment_scores": {
+    "positive": 0.92,
+    "negative": 0.05,
+    "neutral": 0.03
+  },
+  "key_phrases": ["love this product", "exceeded expectations"],
+  "timestamp": "2025-09-13T10:30:00Z"
+}`;
+                    }
+                    break;
+                
+                default:
+                    responseExample = `{
+  "prediction": 0.85,
+  "confidence": 0.92,
+  "timestamp": "2025-09-13T10:30:00Z",
+  "model_version": "v1.0"
+}`;
+            }
+            
+            document.getElementById('response-example').textContent = responseExample;
+        }
+
+        // Documentation Functions
+        function showDocSection(sectionId, clickedElement) {
+            // Hide all doc content
+            document.querySelectorAll('.doc-content').forEach(content => {
+                content.classList.remove('active');
+                content.style.display = 'none';
+            });
+            
+            // Show selected content
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.classList.add('active');
+                targetSection.style.display = 'block';
+            }
+            
+            // Update navigation
+            document.querySelectorAll('.doc-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            // Find and activate the correct link
+            if (clickedElement) {
+                clickedElement.classList.add('active');
+            } else {
+                // Fallback: find the link by sectionId
+                const linkElement = document.querySelector(`a[onclick*="${sectionId}"]`);
+                if (linkElement) {
+                    linkElement.classList.add('active');
+                }
+            }
+        }
+
+        // Utility Functions
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `alert alert-${type === 'error' ? 'danger' : type} alert-dismissible fade show`;
+            notification.style.cssText = 'position: fixed; top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
+            notification.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.remove();
+                }
+            }, 5000);
+        }
+
+        function showLoading(message = 'Loading...') {
+            const loading = document.createElement('div');
+            loading.id = 'loading-overlay';
+            loading.className = 'position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center';
+            loading.style.cssText = 'background: rgba(0,0,0,0.5); z-index: 9999;';
+            loading.innerHTML = `
+                <div class="bg-white p-4 rounded text-center">
+                    <div class="loading-spinner mb-3"></div>
+                    <div>${message}</div>
+                </div>
+            `;
+            
+            document.body.appendChild(loading);
+        }
+
+        function hideLoading() {
+            const loading = document.getElementById('loading-overlay');
+            if (loading) {
+                loading.remove();
+            }
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            showNotification('Welcome to ML Ocean City! 🚀', 'success');
+        });
+    </script>
+</body>
+</html>
