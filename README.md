@@ -313,7 +313,7 @@ GET /api/datasets
 - Community forum discussions
 
 ### Contact
-- Email: support@mlplatform.com
+- Email: vra.9618@gmail.com
 - Emergency support: Available for critical issues
 
 ## 🔮 Roadmap
