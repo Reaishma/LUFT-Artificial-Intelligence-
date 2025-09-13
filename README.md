@@ -2,6 +2,10 @@
 
 A comprehensive no-code machine learning platform that allows users to upload datasets, train various ML models, and deploy them with ease. Built with Flask backend and modern web technologies.
 
+# Live Demo 
+
+**ML Ocean City**-https://reaishma.github.io/LUFT-Artificial-Intelligence-/
+
 ## 🚀 Features
 
 ### Core Functionality
