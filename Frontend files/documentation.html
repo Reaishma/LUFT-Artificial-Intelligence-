@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation - ML Platform</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">🤖 ML Platform</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="model-builder.html">Model Builder</a></li>
+                    <li class="nav-item"><a class="nav-link" href="model-gallery.html">Gallery</a></li>
+                    <li class="nav-item"><a class="nav-link" href="data-uploader.html">Data Upload</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="documentation.html">Docs</a></li>
+                    <li class="nav-item"><a class="nav-link" href="support.html">Support</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>📚 Documentation</h5>
+                    </div>
+                    <div class="list-group list-group-flush">
+                        <a href="#getting-started" class="list-group-item list-group-item-action active">Getting Started</a>
+                        <a href="#data-upload" class="list-group-item list-group-item-action">Data Upload</a>
+                        <a href="#model-building" class="list-group-item list-group-item-action">Model Building</a>
+                        <a href="#training" class="list-group-item list-group-item-action">Training Models</a>
+                        <a href="#evaluation" class="list-group-item list-group-item-action">Model Evaluation</a>
+                        <a href="#deployment" class="list-group-item list-group-item-action">Deployment</a>
+                        <a href="#api-reference" class="list-group-item list-group-item-action">API Reference</a>
+                        <a href="#troubleshooting" class="list-group-item list-group-item-action">Troubleshooting</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-9">
+                <div class="documentation-content">
+                    <section id="getting-started">
+                        <h1 class="mb-4">📚 ML Platform Documentation</h1>
+                        
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h2 class="card-title">🚀 Getting Started</h2>
+                                <p class="card-text">Welcome to the ML Platform! This comprehensive guide will help you build, train, and deploy machine learning models without any coding experience.</p>
+                                
+                                <h4>Quick Start</h4>
+                                <ol>
+                                    <li><strong>Upload Data:</strong> Go to the Data Uploader and upload your dataset (CSV, Excel, or JSON)</li>
+                                    <li><strong>Build Model:</strong> Use the Model Builder to select your algorithm and configure parameters</li>
+                                    <li><strong>Train Model:</strong> Monitor training progress in the Model Trainer</li>
+                                    <li><strong>Evaluate:</strong> Check performance metrics in the Model Evaluator</li>
+                                    <li><strong>Deploy:</strong> Deploy your model to production using the Model Deployer</li>
+                                </ol>
+                                
+                                <h4>System Requirements</h4>
+                                <ul>
+                                    <li>Modern web browser (Chrome, Firefox, Safari, Edge)</li>
+                                    <li>Internet connection for cloud deployments</li>
+                                    <li>Clean, structured datasets for best results</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="data-upload">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h2 class="card-title">📁 Data Upload Guide</h2>
+                                
+                                <h4>Supported File Formats</h4>
+                                <ul>
+                                    <li><strong>CSV:</strong> Comma-separated values with headers</li>
+                                    <li><strong>Excel:</strong> .xlsx files (first sheet will be used)</li>
+                                    <li><strong>JSON:</strong> Structured JSON arrays or objects</li>
+                                </ul>
+                                
+                                <h4>Data Preparation Tips</h4>
+                                <ul>
+                                    <li>Ensure your data has clear column headers</li>
+                                    <li>Remove unnecessary columns before upload</li>
+                                    <li>Handle obvious data quality issues</li>
+                                    <li>Keep file sizes under 100MB for optimal performance</li>
+                                </ul>
+                                
+                                <h4>Automatic Data Processing</h4>
+                                <p>The platform automatically:</p>
+                                <ul>
+                                    <li>Detects column types (numeric, categorical)</li>
+                                    <li>Identifies missing values</li>
+                                    <li>Provides data quality insights</li>
+                                    <li>Suggests preprocessing steps</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="model-building">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h2 class="card-title">🔧 Model Building</h2>
+                                
+                                <h4>Available Algorithms</h4>
+                                
+                                <h5>Regression</h5>
+                                <ul>
+                                    <li><strong>Linear Regression:</strong> Best for linear relationships</li>
+                                    <li><strong>Decision Tree Regressor:</strong> Good for non-linear patterns</li>
+                                    <li><strong>Random Forest Regressor:</strong> Excellent for most regression tasks</li>
+                                    <li><strong>Support Vector Regressor:</strong> Effective for high-dimensional data</li>
+                                    <li><strong>Neural Network Regressor:</strong> Powerful for complex patterns</li>
+                                </ul>
+                                
+                                <h5>Classification</h5>
+                                <ul>
+                                    <li><strong>Logistic Regression:</strong> Simple and interpretable</li>
+                                    <li><strong>Decision Tree Classifier:</strong> Easy to understand</li>
+                                    <li><strong>Random Forest Classifier:</strong> Robust and accurate</li>
+                                    <li><strong>Support Vector Classifier:</strong> Great for text and high-dimensional data</li>
+                                    <li><strong>Neural Network Classifier:</strong> Handles complex patterns</li>
+                                </ul>
+                                
+                                <h5>Clustering</h5>
+                                <ul>
+                                    <li><strong>K-Means:</strong> Good for spherical clusters</li>
+                                    <li><strong>Hierarchical Clustering:</strong> Creates cluster hierarchies</li>
+                                </ul>
+                                
+                                <h5>Dimensionality Reduction</h5>
+                                <ul>
+                                    <li><strong>PCA:</strong> Principal Component Analysis for feature reduction</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="training">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h2 class="card-title">🏋️ Training Models</h2>
+                                
+                                <h4>Training Process</h4>
+                                <ol>
+                                    <li>Data preprocessing (automatic)</li>
+                                    <li>Train/test split (80/20 by default)</li>
+                                    <li>Model fitting on training data</li>
+                                    <li>Performance evaluation on test data</li>
+                                    <li>Model serialization and storage</li>
+                                </ol>
+                                
+                                <h4>Monitoring Training</h4>
+                                <ul>
+                                    <li>Real-time progress updates</li>
+                                    <li>Training logs and status</li>
+                                    <li>Error handling and notifications</li>
+                                    <li>Background processing support</li>
+                                </ul>
+                                
+                                <h4>Training Controls</h4>
+                                <ul>
+                                    <li>Stop training at any time</li>
+                                    <li>Pause and resume functionality</li>
+                                    <li>Queue multiple training jobs</li>
+                                    <li>Email notifications on completion</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="evaluation">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h2 class="card-title">📊 Model Evaluation</h2>
+                                
+                                <h4>Performance Metrics</h4>
+                                
+                                <h5>Classification Metrics</h5>
+                                <ul>
+                                    <li><strong>Accuracy:</strong> Overall correct predictions</li>
+                                    <li><strong>Precision:</strong> True positives / (True positives + False positives)</li>
+                                    <li><strong>Recall:</strong> True positives / (True positives + False negatives)</li>
+                                    <li><strong>F1-Score:</strong> Harmonic mean of precision and recall</li>
+                                </ul>
+                                
+                                <h5>Regression Metrics</h5>
+                                <ul>
+                                    <li><strong>R² Score:</strong> Proportion of variance explained</li>
+                                    <li><strong>Mean Squared Error (MSE):</strong> Average squared differences</li>
+                                    <li><strong>Root Mean Squared Error (RMSE):</strong> Square root of MSE</li>
+                                </ul>
+                                
+                                <h5>Clustering Metrics</h5>
+                                <ul>
+                                    <li><strong>Silhouette Score:</strong> Cluster separation quality</li>
+                                    <li><strong>Number of Clusters:</strong> Optimal cluster count</li>
+                                </ul>
+                                
+                                <h4>Visualization Tools</h4>
+                                <ul>
+                                    <li>Confusion matrices for classification</li>
+                                    <li>ROC curves and AUC scores</li>
+                                    <li>Feature importance plots</li>
+                                    <li>Performance comparison charts</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="deployment">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h2 class="card-title">🚀 Model Deployment</h2>
+                                
+                                <h4>Deployment Options</h4>
+                                <ul>
+                                    <li><strong>AWS:</strong> Amazon Web Services integration</li>
+                                    <li><strong>GCP:</strong> Google Cloud Platform support</li>
+                                    <li><strong>Azure:</strong> Microsoft Azure compatibility</li>
+                                </ul>
+                                
+                                <h4>Environment Types</h4>
+                                <ul>
+                                    <li><strong>Development:</strong> For testing and debugging</li>
+                                    <li><strong>Staging:</strong> Pre-production environment</li>
+                                    <li><strong>Production:</strong> Live deployment</li>
+                                </ul>
+                                
+                                <h4>API Endpoints</h4>
+                                <p>Deployed models are accessible via RESTful APIs:</p>
+                                <pre><code>
+POST /api/predict
+Content-Type: application/json
+
+{
+  "features": [1.0, 2.0, 3.0, 4.0]
+}
+                                </code></pre>
+                                
+                                <h4>Scaling & Monitoring</h4>
+                                <ul>
+                                    <li>Auto-scaling based on demand</li>
+                                    <li>Load balancing for high availability</li>
+                                    <li>Performance monitoring and alerts</li>
+                                    <li>Usage analytics and logging</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="api-reference">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h2 class="card-title">🔌 API Reference</h2>
+                                
+                                <h4>Base URL</h4>
+                                <code>https://api.mlplatform.com/v1</code>
+                                
+                                <h4>Authentication</h4>
+                                <p>All API requests require authentication using API keys:</p>
+                                <pre><code>Authorization: Bearer YOUR_API_KEY</code></pre>
+                                
+                                <h4>Endpoints</h4>
+                                
+                                <h5>Models</h5>
+                                <ul>
+                                    <li><code>GET /models</code> - List all models</li>
+                                    <li><code>GET /models/{id}</code> - Get model details</li>
+                                    <li><code>POST /models/{id}/predict</code> - Make predictions</li>
+                                    <li><code>DELETE /models/{id}</code> - Delete model</li>
+                                </ul>
+                                
+                                <h5>Datasets</h5>
+                                <ul>
+                                    <li><code>GET /datasets</code> - List datasets</li>
+                                    <li><code>POST /datasets</code> - Upload dataset</li>
+                                    <li><code>GET /datasets/{id}</code> - Get dataset info</li>
+                                    <li><code>DELETE /datasets/{id}</code> - Delete dataset</li>
+                                </ul>
+                                
+                                <h5>Training Jobs</h5>
+                                <ul>
+                                    <li><code>POST /train</code> - Start training job</li>
+                                    <li><code>GET /jobs/{id}</code> - Get job status</li>
+                                    <li><code>POST /jobs/{id}/stop</code> - Stop training</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="troubleshooting">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h2 class="card-title">🔧 Troubleshooting</h2>
+                                
+                                <h4>Common Issues</h4>
+                                
+                                <h5>Upload Problems</h5>
+                                <ul>
+                                    <li><strong>File too large:</strong> Compress or sample your data</li>
+                                    <li><strong>Format not supported:</strong> Convert to CSV, Excel, or JSON</li>
+                                    <li><strong>Invalid data:</strong> Check for proper headers and structure</li>
+                                </ul>
+                                
+                                <h5>Training Issues</h5>
+                                <ul>
+                                    <li><strong>Training fails:</strong> Check data quality and feature selection</li>
+                                    <li><strong>Poor performance:</strong> Try different algorithms or preprocessing</li>
+                                    <li><strong>Long training times:</strong> Reduce data size or complexity</li>
+                                </ul>
+                                
+                                <h5>Deployment Problems</h5>
+                                <ul>
+                                    <li><strong>Deployment fails:</strong> Check cloud credentials and permissions</li>
+                                    <li><strong>API not responding:</strong> Verify endpoint URL and authentication</li>
+                                    <li><strong>High latency:</strong> Consider upgrading instance type</li>
+                                </ul>
+                                
+                                <h4>Performance Tips</h4>
+                                <ul>
+                                    <li>Clean and preprocess data before upload</li>
+                                    <li>Remove irrelevant features</li>
+                                    <li>Start with simple algorithms</li>
+                                    <li>Monitor resource usage</li>
+                                    <li>Use staging environment for testing</li>
+                                </ul>
+                                
+                                <h4>Getting Help</h4>
+                                <p>If you need additional support:</p>
+                                <ul>
+                                    <li>Check the <a href="support.html">Support page</a></li>
+                                    <li>Contact our support team</li>
+                                    <li>Join our community forum</li>
+                                    <li>Review video tutorials</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
