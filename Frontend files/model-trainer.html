@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Model Trainer - ML Platform</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">🤖 ML Platform</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="model-builder.html">Model Builder</a></li>
+                    <li class="nav-item"><a class="nav-link" href="model-gallery.html">Gallery</a></li>
+                    <li class="nav-item"><a class="nav-link" href="data-uploader.html">Data Upload</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="model-trainer.html">Trainer</a></li>
+                    <li class="nav-item"><a class="nav-link" href="model-evaluator.html">Evaluator</a></li>
+                    <li class="nav-item"><a class="nav-link" href="documentation.html">Docs</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <h1 class="mb-4">🏋️ Model Trainer</h1>
+        <p class="lead">Monitor and manage your model training processes</p>
+        
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card mb-4" id="training-queue">
+                    <div class="card-header">
+                        <h5>📋 Training Queue</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="queue-list">
+                            <!-- Training jobs will be populated here -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mb-4" id="active-training">
+                    <div class="card-header">
+                        <h5>⚡ Currently Training</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="training-job" id="current-job">
+                            <h6 class="mb-3">Sales Prediction Model - Linear Regression</h6>
+                            <div class="row mb-3">
+                                <div class="col-md-4">
+                                    <small class="text-muted">Progress</small>
+                                    <div class="progress">
+                                        <div class="progress-bar progress-bar-striped progress-bar-animated" 
+                                             style="width: 65%">65%</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <small class="text-muted">Status</small>
+                                    <div><span class="badge bg-warning">Training</span></div>
+                                </div>
+                                <div class="col-md-4">
+                                    <small class="text-muted">Elapsed Time</small>
+                                    <div>2m 34s</div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <small class="text-muted">Dataset</small>
+                                    <div>sales_data.csv (1,234 rows)</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <small class="text-muted">Algorithm</small>
+                                    <div>Linear Regression</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mb-4" id="training-logs">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5>📄 Training Logs</h5>
+                        <button class="btn btn-sm btn-outline-secondary" id="clear-logs">Clear Logs</button>
+                    </div>
+                    <div class="card-body">
+                        <div class="bg-dark text-light p-3 rounded" id="log-output" style="height: 300px; overflow-y: auto; font-family: monospace; font-size: 0.9rem;">
+                            <div class="log-line">[2025-09-13 01:00:00] Starting model training...</div>
+                            <div class="log-line">[2025-09-13 01:00:01] Loading dataset: sales_data.csv</div>
+                            <div class="log-line">[2025-09-13 01:00:02] Dataset shape: (1234, 8)</div>
+                            <div class="log-line">[2025-09-13 01:00:03] Preprocessing data...</div>
+                            <div class="log-line">[2025-09-13 01:00:05] Handling missing values using mean strategy</div>
+                            <div class="log-line">[2025-09-13 01:00:06] Encoding categorical variables</div>
+                            <div class="log-line">[2025-09-13 01:00:08] Scaling features using StandardScaler</div>
+                            <div class="log-line">[2025-09-13 01:00:10] Splitting data: 80% train, 20% test</div>
+                            <div class="log-line">[2025-09-13 01:00:12] Initializing Linear Regression model</div>
+                            <div class="log-line">[2025-09-13 01:00:15] Training model on 987 samples...</div>
+                            <div class="log-line text-warning">[2025-09-13 01:02:30] Training in progress... 65% complete</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h5>📊 Training Statistics</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row text-center">
+                            <div class="col-6">
+                                <div class="metric-card">
+                                    <div class="metric-value">7</div>
+                                    <div>Total Models</div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="metric-card">
+                                    <div class="metric-value">1</div>
+                                    <div>Training</div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="metric-card">
+                                    <div class="metric-value">5</div>
+                                    <div>Completed</div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="metric-card">
+                                    <div class="metric-value">1</div>
+                                    <div>Failed</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h5>⚙️ Training Controls</h5>
+                    </div>
+                    <div class="card-body">
+                        <button class="btn btn-danger btn-sm mb-2 w-100" id="stop-training">
+                            ⏹️ Stop Current Training
+                        </button>
+                        <button class="btn btn-warning btn-sm mb-2 w-100" id="pause-training">
+                            ⏸️ Pause Training
+                        </button>
+                        <button class="btn btn-info btn-sm mb-2 w-100" id="restart-training">
+                            🔄 Restart Training
+                        </button>
+                        <hr>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="auto-evaluate" checked>
+                            <label class="form-check-label" for="auto-evaluate">
+                                Auto-evaluate after training
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="email-notifications">
+                            <label class="form-check-label" for="email-notifications">
+                                Email notifications
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h5>🔄 Recent Training History</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="training-history">
+                            <div class="history-item mb-3">
+                                <strong>Customer Segmentation</strong>
+                                <div class="text-muted small">K-Means • Completed • 2 hours ago</div>
+                                <span class="badge bg-success">94.2% Accuracy</span>
+                            </div>
+                            <div class="history-item mb-3">
+                                <strong>Fraud Detection</strong>
+                                <div class="text-muted small">Random Forest • Completed • 5 hours ago</div>
+                                <span class="badge bg-success">96.8% Accuracy</span>
+                            </div>
+                            <div class="history-item mb-3">
+                                <strong>Price Prediction</strong>
+                                <div class="text-muted small">Neural Network • Failed • 1 day ago</div>
+                                <span class="badge bg-danger">Training Error</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
