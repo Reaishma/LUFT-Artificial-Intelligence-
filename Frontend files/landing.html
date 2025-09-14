@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}Welcome to ML Platform{% endblock %}
+
+{% block content %}
+<div class="hero-section bg-gradient text-white py-5 mb-5">
+    <div class="container text-center">
+        <h1 class="display-4 fw-bold mb-4">🚀 No-Code Machine Learning Platform</h1>
+        <p class="lead mb-4">Build, train, and deploy machine learning models without writing a single line of code</p>
+        <a href="{{ url_for('model_builder') }}" class="btn btn-light btn-lg">Get Started</a>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <h3 class="card-title">📊 Easy Data Upload</h3>
+                    <p class="card-text">Upload your datasets in CSV, Excel, or JSON format with automated preprocessing capabilities.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <h3 class="card-title">🧠 Multiple ML Algorithms</h3>
+                    <p class="card-text">Choose from various algorithms including regression, classification, clustering, and deep learning models.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <h3 class="card-title">🚀 One-Click Deployment</h3>
+                    <p class="card-text">Deploy your trained models as REST APIs with AWS cloud integration for scalability.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-12">
+            <h2 class="text-center mb-4">✨ Platform Benefits</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <ul class="list-unstyled">
+                        <li class="mb-3">✅ <strong>No Coding Required:</strong> Drag-and-drop interface for model building</li>
+                        <li class="mb-3">✅ <strong>Automated Preprocessing:</strong> Handle missing values, normalization, feature engineering</li>
+                        <li class="mb-3">✅ <strong>Model Evaluation:</strong> Comprehensive performance metrics and visualizations</li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <ul class="list-unstyled">
+                        <li class="mb-3">✅ <strong>Cloud Integration:</strong> AWS services for scalable deployment</li>
+                        <li class="mb-3">✅ <strong>Multiple Frameworks:</strong> TensorFlow, PyTorch, scikit-learn support</li>
+                        <li class="mb-3">✅ <strong>Enterprise Ready:</strong> MongoDB backend with secure data handling</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
