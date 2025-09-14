@@ -57,12 +57,7 @@ ML-Platform/
 ├── Configuration
 │   ├── requirements.txt        # Python dependencies
 │   └── README.md              # This file
-└── Directories (created at runtime)
-    ├── uploads/               # Uploaded datasets
-    ├── trained_models/        # Saved models
-    ├── training_logs/         # Training logs
-    ├── evaluation_results/    # Evaluation reports
-    └── deployments/          # Deployment artifacts
+
 ```
 
 ## 🛠 Installation & Setup
