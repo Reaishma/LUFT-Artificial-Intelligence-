@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Model Deployer - ML Platform</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">🤖 ML Platform</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="model-builder.html">Model Builder</a></li>
+                    <li class="nav-item"><a class="nav-link" href="model-gallery.html">Gallery</a></li>
+                    <li class="nav-item"><a class="nav-link" href="data-uploader.html">Data Upload</a></li>
+                    <li class="nav-item"><a class="nav-link" href="model-trainer.html">Trainer</a></li>
+                    <li class="nav-item"><a class="nav-link" href="model-evaluator.html">Evaluator</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="model-deployer.html">Deployer</a></li>
+                    <li class="nav-item"><a class="nav-link" href="documentation.html">Docs</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <h1 class="mb-4">🚀 Model Deployer</h1>
+        <p class="lead">Deploy your trained models to production environments</p>
+        
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5>🔧 Deployment Configuration</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Select Model</label>
+                                <select class="form-select" id="model-select">
+                                    <option value="">Choose a trained model</option>
+                                    <option value="fraud_detection">Fraud Detection Model</option>
+                                    <option value="sales_prediction">Sales Prediction Model</option>
+                                    <option value="customer_segment">Customer Segmentation</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Deployment Environment</label>
+                                <select class="form-select" id="environment-select">
+                                    <option value="staging">Staging</option>
+                                    <option value="production">Production</option>
+                                    <option value="development">Development</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Cloud Provider</label>
+                                <select class="form-select" id="cloud-provider">
+                                    <option value="aws">Amazon Web Services</option>
+                                    <option value="gcp">Google Cloud Platform</option>
+                                    <option value="azure">Microsoft Azure</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Instance Type</label>
+                                <select class="form-select" id="instance-type">
+                                    <option value="t3.micro">t3.micro (1 vCPU, 1 GB RAM)</option>
+                                    <option value="t3.small">t3.small (2 vCPU, 2 GB RAM)</option>
+                                    <option value="t3.medium">t3.medium (2 vCPU, 4 GB RAM)</option>
+                                    <option value="t3.large">t3.large (2 vCPU, 8 GB RAM)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Auto Scaling</label>
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="auto-scaling" checked>
+                                    <label class="form-check-label" for="auto-scaling">
+                                        Enable auto scaling
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Load Balancer</label>
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="load-balancer" checked>
+                                    <label class="form-check-label" for="load-balancer">
+                                        Enable load balancer
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <label class="form-label">API Endpoint Name</label>
+                                <input type="text" class="form-control" id="api-name" placeholder="fraud-detection-api">
+                            </div>
+                        </div>
+
+                        <div class="d-grid">
+                            <button class="btn btn-primary btn-lg" id="deploy-btn">
+                                🚀 Deploy Model
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mb-4" id="deployment-status" style="display: none;">
+                    <div class="card-header">
+                        <h5>📊 Deployment Status</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="progress mb-3">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated" 
+                                 style="width: 45%" id="deploy-progress">45%</div>
+                        </div>
+                        <div id="deployment-logs" class="bg-light p-3 rounded" style="height: 200px; overflow-y: auto;">
+                            <div class="log-line">Creating AWS resources...</div>
+                            <div class="log-line">Setting up EC2 instance...</div>
+                            <div class="log-line">Installing dependencies...</div>
+                            <div class="log-line">Deploying model...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h5>📈 Deployment Statistics</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row text-center">
+                            <div class="col-6">
+                                <div class="metric-card">
+                                    <div class="metric-value">12</div>
+                                    <div>Active Deployments</div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="metric-card">
+                                    <div class="metric-value">3</div>
+                                    <div>This Month</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h5>🔧 Deployment Options</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="monitoring" checked>
+                            <label class="form-check-label" for="monitoring">
+                                Enable monitoring
+                            </label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="logging" checked>
+                            <label class="form-check-label" for="logging">
+                                Enable logging
+                            </label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="ssl" checked>
+                            <label class="form-check-label" for="ssl">
+                                Enable SSL/TLS
+                            </label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="backup">
+                            <label class="form-check-label" for="backup">
+                                Automatic backups
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h5>💰 Cost Estimation</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="cost-item d-flex justify-content-between mb-2">
+                            <span>Compute (t3.micro)</span>
+                            <span>$8.76/month</span>
+                        </div>
+                        <div class="cost-item d-flex justify-content-between mb-2">
+                            <span>Storage (20 GB)</span>
+                            <span>$2.00/month</span>
+                        </div>
+                        <div class="cost-item d-flex justify-content-between mb-2">
+                            <span>Data Transfer</span>
+                            <span>$0.09/GB</span>
+                        </div>
+                        <hr>
+                        <div class="cost-total d-flex justify-content-between">
+                            <strong>Estimated Total</strong>
+                            <strong>$10.76/month</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h5>📋 Deployment History</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="deployment-item mb-3">
+                            <strong>Fraud Detection API</strong>
+                            <div class="text-muted small">AWS • Production • 2 days ago</div>
+                            <span class="badge bg-success">Active</span>
+                        </div>
+                        <div class="deployment-item mb-3">
+                            <strong>Sales Prediction API</strong>
+                            <div class="text-muted small">AWS • Staging • 5 days ago</div>
+                            <span class="badge bg-warning">Staging</span>
+                        </div>
+                        <div class="deployment-item mb-3">
+                            <strong>Customer Segment API</strong>
+                            <div class="text-muted small">GCP • Production • 1 week ago</div>
+                            <span class="badge bg-success">Active</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>🌐 Active Deployments</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Model Name</th>
+                                        <th>API Endpoint</th>
+                                        <th>Environment</th>
+                                        <th>Status</th>
+                                        <th>Deployed</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Fraud Detection</td>
+                                        <td><code>https://api.example.com/fraud-detection</code></td>
+                                        <td><span class="badge bg-success">Production</span></td>
+                                        <td><span class="badge bg-success">Running</span></td>
+                                        <td>2 days ago</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-primary">Monitor</button>
+                                            <button class="btn btn-sm btn-outline-danger">Stop</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Sales Prediction</td>
+                                        <td><code>https://staging.example.com/sales-pred</code></td>
+                                        <td><span class="badge bg-warning">Staging</span></td>
+                                        <td><span class="badge bg-success">Running</span></td>
+                                        <td>5 days ago</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-primary">Monitor</button>
+                                            <button class="btn btn-sm btn-outline-success">Promote</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
