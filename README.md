@@ -29,6 +29,9 @@ A comprehensive no-code machine learning platform that allows users to upload da
 - **Landing Page**: Platform introduction and benefits
 - **Model Builder**: Step-by-step model creation wizard
 - **Model Gallery**: Browse and manage trained models
+
+![model](https://github.com/Reaishma/LUFT-Artificial-Intelligence-/blob/main/Frontend%20files%2Fchrome_screenshot_Sep%2016%2C%202025%2010_14_25%20AM%20GMT%2B05_30.png)
+
 - **Data Uploader**: Drag-and-drop data upload with analysis
 - **Model Trainer**: Monitor training progress and logs
 - **Model Evaluator**: Comprehensive performance analysis
