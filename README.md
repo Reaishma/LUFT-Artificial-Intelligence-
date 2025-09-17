@@ -311,6 +311,8 @@ GET /api/datasets
 - Email: vra.9618@gmail.com
 - Emergency support: Available for critical issues
 
+![Support](https://github.com/Reaishma/LUFT-Artificial-Intelligence-/blob/main/chrome_screenshot_Sep%2016%2C%202025%2010_32_52%20AM%20GMT%2B05_30.png)
+
 ## 🔮 Roadmap
 
 ### Upcoming Features
