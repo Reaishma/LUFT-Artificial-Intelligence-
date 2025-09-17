@@ -18,6 +18,9 @@ A comprehensive no-code machine learning platform that allows users to upload da
   - **Classification**: Logistic Regression, Decision Tree, Random Forest, SVM, Neural Networks  
   - **Clustering**: K-Means, Hierarchical Clustering
   - **Dimensionality Reduction**: Principal Component Analysis (PCA)
+
+![Model builder](https://github.com/Reaishma/LUFT-Artificial-Intelligence-/blob/main/Frontend%20files%2Fchrome_screenshot_Sep%2016%2C%202025%2010_13_00%20AM%20GMT%2B05_30.png)
+
 - **Model Training**: Background training with real-time progress tracking
 - **Model Evaluation**: Comprehensive performance metrics and visualizations
 - **Model Deployment**: One-click deployment to cloud platforms (AWS, GCP, Azure)
