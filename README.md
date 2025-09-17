@@ -135,6 +135,9 @@ python app.py
 - Compare multiple models
 
 ### 5. Deploy Model
+
+![Deployer](https://github.com/Reaishma/LUFT-Artificial-Intelligence-/blob/main/Frontend%20files%2Fchrome_screenshot_Sep%2016%2C%202025%2010_31_50%20AM%20GMT%2B05_30.png)
+
 - Go to **Model Deployer**
 - Select trained model and deployment configuration
 - Choose cloud provider (AWS, GCP, Azure) or deploy locally
