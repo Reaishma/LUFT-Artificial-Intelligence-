@@ -318,6 +318,8 @@ GET /api/datasets
 - API reference with examples
 - Video tutorials (coming soon)
 
+![Docs](https://github.com/Reaishma/LUFT-Artificial-Intelligence-/blob/main/Frontend%20files%2Fchrome_screenshot_Sep%2016%2C%202025%2010_32_22%20AM%20GMT%2B05_30.png)
+
 ### Community
 - GitHub Issues for bug reports
 - Feature requests welcome
