@@ -120,6 +120,9 @@ python app.py
 - Create your model
 
 ### 3. Train Model
+
+![Model Trained](https://github.com/Reaishma/LUFT-Artificial-Intelligence-/blob/main/Frontend%20files%2Fchrome_screenshot_Sep%2016%2C%202025%2010_15_46%20AM%20GMT%2B05_30.png)
+
 - Monitor training progress in **Model Trainer**
 - View real-time logs and status updates
 - Control training process (stop, pause, restart)
