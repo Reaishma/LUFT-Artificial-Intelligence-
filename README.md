@@ -136,6 +136,8 @@ python app.py
 
 ## 📊 Supported Algorithms
 
+![Model Gallery](https://github.com/Reaishma/LUFT-Artificial-Intelligence-/blob/main/Frontend%20files%2Fchrome_screenshot_Sep%2016%2C%202025%2010_14_00%20AM%20GMT%2B05_30.png)
+
 ### Regression
 - **Linear Regression**: Simple linear relationships
 - **Decision Tree Regressor**: Non-linear patterns
